@@ -228,6 +228,10 @@ export default function Home() {
                         <div className="border-2 border-slate-200 rounded-lg p-3 text-center">
                           <div className="text-2xl">🐉</div>
                           <div>Enemy</div>
+                          <div className="mt-1 h-2 w-24 bg-slate-100 rounded-full overflow-hidden">
+                            <div className="h-full bg-red-500 w-full"></div>
+                          </div>
+                          <div className="text-xs text-slate-500 mt-0.5">100/100 HP</div>
                         </div>
                       </div>
                       
@@ -308,6 +312,10 @@ export default function Home() {
                         <div className="border-2 border-slate-200 rounded-lg p-3 text-center">
                           <div className="text-2xl">🐉</div>
                           <div>Enemy</div>
+                          <div className="mt-1 h-2 w-24 bg-slate-100 rounded-full overflow-hidden">
+                            <div className="h-full bg-red-500 w-full"></div>
+                          </div>
+                          <div className="text-xs text-slate-500 mt-0.5">100/100 HP</div>
                         </div>
                       </div>
                       
@@ -390,6 +398,10 @@ export default function Home() {
                         <div className="border-2 border-slate-200 rounded-lg p-3 text-center">
                           <div className="text-2xl">🐉</div>
                           <div>Enemy</div>
+                          <div className="mt-1 h-2 w-24 bg-slate-100 rounded-full overflow-hidden">
+                            <div className="h-full bg-red-500 w-full"></div>
+                          </div>
+                          <div className="text-xs text-slate-500 mt-0.5">100/100 HP</div>
                         </div>
                       </div>
                       
@@ -487,6 +499,10 @@ export default function Home() {
                         >
                           <div className="text-2xl">🐉</div>
                           <div>Enemy</div>
+                          <div className="mt-1 h-2 w-24 bg-slate-100 rounded-full overflow-hidden">
+                            <div className="h-full bg-red-500 w-4/5"></div>
+                          </div>
+                          <div className="text-xs text-slate-500 mt-0.5">85/100 HP</div>
                           <Badge className="mt-1 bg-red-500">-15 HP</Badge>
                         </motion.div>
                       </div>
@@ -619,14 +635,17 @@ export default function Home() {
                       </div>
                       
                       <div className="flex justify-center mb-4">
-                        <motion.div 
+                        <motion.div
                           animate={{ scale: [1, 1.05, 1] }}
-                          transition={{ duration: 1, repeat: Infinity }}
+                          transition={{ duration: 0.5 }}
                           className="border-2 border-slate-200 rounded-lg p-3 text-center"
                         >
                           <div className="text-2xl">🐉</div>
                           <div>Enemy</div>
-                          <Badge className="mt-1 bg-purple-500">Attacking!</Badge>
+                          <div className="mt-1 h-2 w-24 bg-slate-100 rounded-full overflow-hidden">
+                            <div className="h-full bg-red-500 w-3/5"></div>
+                          </div>
+                          <div className="text-xs text-slate-500 mt-0.5">60/100 HP</div>
                         </motion.div>
                       </div>
                       
@@ -867,6 +886,10 @@ export default function Home() {
                           <div className="border-2 border-slate-200 rounded-lg p-3 text-center">
                             <div className="text-2xl">🐉</div>
                             <div>Elite Enemy</div>
+                            <div className="mt-1 h-2 w-24 bg-slate-100 rounded-full overflow-hidden">
+                              <div className="h-full bg-red-500 w-3/4"></div>
+                            </div>
+                            <div className="text-xs text-slate-500 mt-0.5">75/100 HP</div>
                           </div>
                         </div>
                         
