@@ -52,12 +52,9 @@ export function EquationDisplay({
   const { generateEquation, checkForPattern } = useEquation(difficulty);
   const [equation, setEquation] = useState<Equation>(DEFAULT_EQUATION);
   const [pattern, setPattern] = useState<Pattern>({ hasPattern: false, patternName: null });
-  const [isClient, setIsClient] = useState(false);
   
   // Only update equation on client-side to prevent hydration errors
   useEffect(() => {
-    setIsClient(true);
-    
     if (!customEquation) {
       const newEquation = generateEquation();
       setEquation(newEquation);

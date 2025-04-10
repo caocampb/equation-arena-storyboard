@@ -1,6 +1,5 @@
 "use client";
 
-import { ReactNode } from 'react';
 import { Badge } from "@/components/ui/badge";
 import { LucideIcon } from 'lucide-react';
 import { motion } from 'framer-motion';

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ArrowRight, ArrowDown, Info, LightbulbIcon, Target, BookOpen, Eye, Brain } from 'lucide-react';
+import { X, ArrowRight, Info, LightbulbIcon, BookOpen, Brain } from 'lucide-react';
 import { Button } from './ui/button';
 
 export function StoryboardGuide() {
