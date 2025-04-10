@@ -1,13 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Toaster } from "@/components/ui/sonner";
 import { motion } from "framer-motion";
-import { ArrowRight, Check, Award, Zap, Info, Calculator, Brain, Target, BarChart, BookOpen, Focus, Eye, HandMetal, MoveHorizontal, Sparkles, X, ArrowDown } from "lucide-react";
+import { ArrowRight, Award, Zap, Calculator, Brain, Target, BarChart, BookOpen, Focus, Eye, HandMetal, MoveHorizontal, Sparkles, ArrowDown } from "lucide-react";
 import { EquationDisplay } from "@/components/EquationDisplay";
 import { StoryboardGuide } from "@/components/StoryboardGuide";
 import { ConnectorManager } from "@/components/FlowConnector";
@@ -772,7 +772,7 @@ export default function Home() {
                                   <div class="text-2xl">🎉</div>
                                   <div>
                                     <div class="font-medium">Thanks for playing!</div>
-                                    <div class="text-sm">You've completed this battle</div>
+                                    <div class="text-sm">You&apos;ve completed this battle</div>
                                   </div>
                                 </div>
                               `;
@@ -1120,11 +1120,11 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="info-card">
                 <div className="info-card-title">Number Selection</div>
-                <div className="info-card-content">Slight scale animation (1.05×) with 100ms duration and subtle "click" sound</div>
+                <div className="info-card-content">Slight scale animation (1.05×) with 100ms duration and subtle &quot;click&quot; sound</div>
               </div>
               <div className="info-card">
                 <div className="info-card-title">Equation Completion</div>
-                <div className="info-card-content">Green pulse animation with 300ms duration and rising "success" tone</div>
+                <div className="info-card-content">Green pulse animation with 300ms duration and rising &quot;success&quot; tone</div>
               </div>
               <div className="info-card">
                 <div className="info-card-title">Pattern Discovery</div>
@@ -1159,9 +1159,9 @@ export default function Home() {
               <h3 className="principle-title text-purple-900">Timeout State</h3>
               <div className="bg-white rounded-lg p-3 border border-amber-200 mb-3">
                 <div className="text-center text-amber-600 text-lg font-medium">5 + 3 = ?</div>
-                <div className="text-xs text-center mt-1 text-amber-500">Time's up! Answer: 8</div>
+                <div className="text-xs text-center mt-1 text-amber-500">Time&apos;s up! Answer: 8</div>
               </div>
-              <p className="principle-description">When time expires, answer is revealed and player's turn ends without damage to enemy.</p>
+              <p className="principle-description">When time expires, answer is revealed and player&apos;s turn ends without damage to enemy.</p>
             </div>
             
             <div className="principle-card">
