@@ -12,6 +12,7 @@ interface Connection {
   toAnchor?: 'left' | 'right' | 'top' | 'bottom' | 'center';
   labelOffset?: { x: number; y: number };
   isLearningMoment?: boolean;
+  labelPosition?: 'top' | 'bottom' | 'left' | 'right';
 }
 
 interface ConnectorManagerProps {
@@ -116,7 +117,19 @@ export function ConnectorManager({ connections, className = '' }: ConnectorManag
       if (conn.type === 'horizontal') {
         path = `M${adjustedFromX},${adjustedFromY} L${adjustedToX},${adjustedToY}`;
         labelX = (adjustedFromX + adjustedToX) / 2;
-        labelY = adjustedFromY - 15;
+        
+        // Position label based on labelPosition
+        if (conn.labelPosition === 'bottom') {
+          labelY = adjustedFromY + 20;
+        } else if (conn.labelPosition === 'left') {
+          labelX = adjustedFromX + 25;
+          labelY = adjustedFromY;
+        } else if (conn.labelPosition === 'right') {
+          labelX = adjustedToX - 25;
+          labelY = adjustedToY;
+        } else { // default is 'top'
+          labelY = adjustedFromY - 15;
+        }
       } else if (conn.type === 'vertical') {
         // For vertical paths, use a smooth curve
         const controlPointY = (adjustedFromY + adjustedToY) / 2;
@@ -125,7 +138,19 @@ export function ConnectorManager({ connections, className = '' }: ConnectorManag
         path = `M${adjustedFromX},${adjustedFromY} C${adjustedFromX},${controlPointY} ${adjustedToX},${controlPointY} ${adjustedToX},${adjustedToY}`;
         
         labelX = (adjustedFromX + adjustedToX) / 2;
-        labelY = (adjustedFromY + adjustedToY) / 2 - 20; // Position with more space above 
+        
+        // Position label based on labelPosition
+        if (conn.labelPosition === 'bottom') {
+          labelY = adjustedToY - 20;
+        } else if (conn.labelPosition === 'left') {
+          labelX = adjustedFromX - 20;
+          labelY = (adjustedFromY + adjustedToY) / 2;
+        } else if (conn.labelPosition === 'right') {
+          labelX = adjustedFromX + 20;
+          labelY = (adjustedFromY + adjustedToY) / 2;
+        } else { // default is 'top'
+          labelY = (adjustedFromY + adjustedToY) / 2 - 20;
+        }
       } else if (conn.type === 'diagonal') {
         // For diagonal paths, use a curved path for better aesthetics
         const midX = (adjustedFromX + adjustedToX) / 2;
@@ -136,6 +161,18 @@ export function ConnectorManager({ connections, className = '' }: ConnectorManag
         
         labelX = midX;
         labelY = midY;
+        
+        // Position label based on labelPosition
+        if (conn.labelPosition === 'bottom') {
+          labelY = midY + 20;
+        } else if (conn.labelPosition === 'left') {
+          labelX = midX - 20;
+        } else if (conn.labelPosition === 'right') {
+          labelX = midX + 20;
+        } else { // default is 'top'
+          labelY = midY - 20;
+        }
+        
         labelRotation = Math.atan2(adjustedToY - adjustedFromY, adjustedToX - adjustedFromX) * 180 / Math.PI;
         
         // Adjust label rotation to be readable
