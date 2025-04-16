@@ -527,7 +527,7 @@ export default function Home() {
                         <Button variant="outline" size="sm" className="op-button">×</Button>
                         <Button variant="outline" size="sm" className="op-button">(</Button>
                         <Button variant="outline" size="sm" className="op-button">)</Button>
-                      </div>
+                </div>
                 
                 <div className="flex justify-center">
                   <Button disabled className="kid-button w-full opacity-50">CAST SPELL</Button>
@@ -629,7 +629,7 @@ export default function Home() {
                         <Button variant="outline" size="sm" className="op-button bg-purple-100">×</Button>
                         <Button variant="outline" size="sm" className="op-button bg-purple-100">(</Button>
                         <Button variant="outline" size="sm" className="op-button bg-purple-100">)</Button>
-                      </div>
+                </div>
                 
                 <div className="flex justify-center">
                   <Button className="kid-button w-full">CAST SPELL</Button>
@@ -733,7 +733,7 @@ export default function Home() {
                         <Button variant="outline" size="sm" className="op-button">×</Button>
                         <Button variant="outline" size="sm" className="op-button">(</Button>
                         <Button variant="outline" size="sm" className="op-button">)</Button>
-                      </div>
+                </div>
                 
                 <div className="flex justify-center">
                         <Button disabled className="kid-button w-full opacity-50">

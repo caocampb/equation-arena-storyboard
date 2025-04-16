@@ -1,0 +1,235 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Toaster } from "@/components/ui/sonner";
+import { motion } from "framer-motion";
+import { Award, Zap, Calculator, Brain, Target, BookOpen, Focus, Eye, HandMetal, MoveHorizontal, Sparkles } from "lucide-react";
+import { EquationDisplay } from "@/components/EquationDisplay";
+import { StoryboardGuide } from "@/components/StoryboardGuide";
+import { ConnectorManager } from "@/components/FlowConnector";
+import { DesignCallout } from "@/components/DesignCallout";
+import { LearningObjective } from "@/components/LearningObjective";
+
+function useStaggeredAnimation(itemCount: number, staggerDelay = 0.1) {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: staggerDelay,
+        delayChildren: 0.5,
+        when: "beforeChildren"
+      }
+    }
+  };
+  
+  const itemVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: 20 
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 260,
+        damping: 20
+      }
+    }
+  };
+  
+  return { containerVariants, itemVariants };
+}
+
+export default function Home() {
+  const { containerVariants, itemVariants } = useStaggeredAnimation(7);
+
+  return (
+    <div className="min-h-screen math-bg p-8 pb-20">
+      <Toaster />
+      <header className="mb-8">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center justify-center gap-3 mb-2"
+        >
+          <Calculator className="h-8 w-8 text-primary" />
+          <h1 className="text-4xl font-bold text-center text-primary">Equation Arena Storyboard</h1>
+        </motion.div>
+        <p className="text-center text-gray-500 mb-4">Interactive Grade 5 math battle experience</p>
+        
+        <div className="max-w-2xl mx-auto p-4 bg-indigo-50 rounded-lg border border-indigo-100 mb-6">
+          <h2 className="text-sm font-medium text-indigo-800 flex items-center mb-2">
+            <Eye className="h-4 w-4 mr-1" /> Design Vision
+          </h2>
+          <p className="text-sm text-indigo-700">
+            An engaging math battle experience that develops computational fluency, order of operations understanding, and fraction/decimal mastery through immediate feedback and visual rewards.
+          </p>
+        </div>
+        
+        <div className="flex justify-center">
+          <StoryboardGuide />
+        </div>
+      </header>
+
+      <div className="relative max-w-6xl mx-auto">
+        {/* Math symbols floating in background */}
+        {[
+          { symbol: '+', top: '20%', left: '15%', rotate: '5deg', duration: 3 },
+          { symbol: '×', top: '50%', left: '80%', rotate: '-8deg', duration: 4 },
+          { symbol: '()', top: '65%', left: '75%', rotate: '-2deg', duration: 3.5 },
+          { symbol: '½', top: '70%', left: '30%', rotate: '-10deg', duration: 4.5 },
+          { symbol: '0.5', top: '45%', left: '20%', rotate: '-13deg', duration: 3.2 }
+        ].map((item, i) => (
+          <motion.div 
+            key={i}
+            className="absolute text-4xl text-primary/10 font-bold pointer-events-none"
+            style={{
+              top: item.top,
+              left: item.left,
+              transform: `rotate(${item.rotate})`
+            }}
+            animate={{
+              y: [0, 10, 0],
+              opacity: [0.2, 0.3, 0.2]
+            }}
+            transition={{
+              duration: item.duration,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            {item.symbol}
+          </motion.div>
+        ))}
+
+        {/* Game Flow Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mb-8 flex items-center justify-center"
+        >
+          <div className="bg-gradient-to-r from-indigo-500 to-blue-600 px-6 py-2 rounded-lg shadow-md">
+            <h2 className="text-xl font-bold text-white flex items-center justify-center">
+              <MoveHorizontal className="h-5 w-5 mr-2" />
+              Game Flow Sequence
+              <span className="text-xs ml-2 bg-white/20 rounded px-2 py-0.5">Total Duration: ~6-8 minutes</span>
+            </h2>
+          </div>
+        </motion.div>
+
+        {/* Flow connector overlay */}
+        <ConnectorManager 
+          connections={[
+            { 
+              fromId: "card-1", 
+              toId: "card-tutorial", 
+              label: "Game loads", 
+              type: "horizontal",
+              fromAnchor: "right",
+              toAnchor: "left",
+              labelPosition: "top",
+              labelOffset: { x: 0, y: -5 }
+            },
+            { 
+              fromId: "card-tutorial", 
+              toId: "card-2", 
+              label: "Tutorial complete", 
+              type: "horizontal",
+              fromAnchor: "right",
+              toAnchor: "left",
+              labelPosition: "top",
+              labelOffset: { x: 0, y: -5 }
+            },
+            { 
+              fromId: "card-2", 
+              toId: "card-3", 
+              label: "Equation building", 
+              type: "diagonal",
+              fromAnchor: "bottom",
+              toAnchor: "top",
+              isLearningMoment: true,
+              labelPosition: "right",
+              labelOffset: { x: 5, y: 0 }
+            },
+            { 
+              fromId: "card-3", 
+              toId: "card-error", 
+              label: "Incorrect solution", 
+              type: "horizontal",
+              fromAnchor: "right",
+              toAnchor: "left",
+              labelPosition: "top",
+              labelOffset: { x: 0, y: -5 }
+            },
+            { 
+              fromId: "card-error", 
+              toId: "card-4", 
+              label: "Try again", 
+              type: "horizontal",
+              fromAnchor: "right",
+              toAnchor: "left",
+              labelPosition: "top",
+              labelOffset: { x: 0, y: -5 }
+            },
+            { 
+              fromId: "card-4", 
+              toId: "card-shield", 
+              label: "Ice spell", 
+              type: "diagonal",
+              fromAnchor: "bottom",
+              toAnchor: "top",
+              labelPosition: "right",
+              labelOffset: { x: 5, y: 0 }
+            },
+            { 
+              fromId: "card-shield", 
+              toId: "card-5", 
+              label: "Begin Level 2", 
+              type: "horizontal",
+              fromAnchor: "right",
+              toAnchor: "left",
+              labelPosition: "top",
+              labelOffset: { x: 0, y: -5 }
+            },
+            { 
+              fromId: "card-5", 
+              toId: "card-6", 
+              label: "Pattern recognition", 
+              type: "horizontal",
+              fromAnchor: "right",
+              toAnchor: "left",
+              labelPosition: "top",
+              labelOffset: { x: 0, y: -5 }
+            },
+            { 
+              fromId: "card-6", 
+              toId: "card-7", 
+              label: "Begin Level 3", 
+              type: "diagonal",
+              fromAnchor: "bottom",
+              toAnchor: "top",
+              isLearningMoment: true,
+              labelPosition: "right",
+              labelOffset: { x: 5, y: 0 }
+            },
+            { 
+              fromId: "card-7", 
+              toId: "card-8", 
+              label: "Game complete", 
+              type: "diagonal",
+              fromAnchor: "bottom",
+              toAnchor: "top",
+              labelPosition: "right",
+              labelOffset: { x: 5, y: 0 }
+            }
+          ]}
+        />
+      </div>
+    </div>
+  );
+} 
