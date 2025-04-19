@@ -1,16 +1,5 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/next",
-      "config": {
-        "buildCommand": "npm run vercel-build",
-        "installCommand": "npm install --legacy-peer-deps"
-      }
-    }
-  ],
-  "env": {
-    "NEXT_DISABLE_OPTIMIZED_FONT_LOADING": "true"
-  }
+  "buildCommand": "bun run build",
+  "installCommand": "bun install",
+  "framework": "nextjs"
 } 
