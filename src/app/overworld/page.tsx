@@ -1,75 +1,50 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { HeroPanel } from "@/components/overworld/HeroPanel";
+import { TabNavigation } from "@/components/overworld/TabNavigation";
+import SimpleOverworldGraph from "@/components/overworld/SimpleOverworldGraph";
+import { useGameState } from "@/context/GameStateContext";
 
 export default function Overworld() {
-  const [activeTab, setActiveTab] = useState<string>("Math");
+  const { activeTab, setActiveTab, playerStats } = useGameState();
   
   return (
-    <div className="min-h-screen bg-blue-50 flex flex-col">
-      {/* Header */}
-      <header className="p-4 bg-white shadow-sm">
-        <h1 className="text-3xl font-bold">Incept Layer 2 - Overworld</h1>
-        
-        {/* Subject Tabs */}
-        <div className="flex gap-2 mt-4">
-          {["Math", "Science", "History", "Language"].map((tab) => (
-            <button
-              key={tab}
-              className={`px-6 py-2 border rounded-md ${
-                activeTab === tab 
-                  ? "bg-gray-200 border-gray-300" 
-                  : "bg-white border-gray-200"
-              }`}
-              onClick={() => setActiveTab(tab)}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
-      </header>
+    <div className="min-h-screen bg-gradient-to-b from-[#0A1930] to-[#15295A] flex flex-col items-center">
+      {/* Hero Panel Container - Added max-width and centering */}
+      <div className="w-full max-w-4xl mx-auto p-4">
+        <HeroPanel 
+          username={playerStats.username}
+          level={playerStats.level}
+          coins={playerStats.coins}
+          xpProgress={playerStats.xpProgress}
+          achievementCount={playerStats.achievementCount}
+          totalAchievements={playerStats.totalAchievements}
+        />
+      </div>
       
-      {/* Main Content Area */}
-      <main className="flex-1 relative p-4 flex flex-col items-center justify-center">
-        {/* Path with Nodes */}
-        <div className="relative w-[700px] h-[200px]">
-          {/* Connecting Lines */}
-          <div className="absolute top-[50%] left-[15%] w-[20%] h-[2px] bg-blue-700"></div>
-          <div className="absolute top-[50%] left-[38%] w-[20%] h-[2px] bg-blue-700"></div>
-          <div className="absolute top-[50%] left-[61%] w-[20%] h-[2px] bg-blue-700"></div>
+      {/* Main Content Area - Worlds Map */}
+      <main className="flex-1 relative p-4 flex flex-col items-center justify-center overflow-hidden w-full">
+        <div className="relative w-full max-w-4xl mx-auto">
+          <h2 className="text-3xl font-display font-bold text-white mb-8 text-center tracking-wide">
+            Select Your World
+          </h2>
           
-          {/* Nodes */}
-          <div className="absolute top-[calc(50%-25px)] left-[10%] w-[50px] h-[50px] rounded-full bg-blue-600"></div>
-          <div className="absolute top-[calc(50%-25px)] left-[33%] w-[50px] h-[50px] rounded-full bg-blue-600"></div>
-          <div className="absolute top-[calc(50%-25px)] left-[56%] w-[50px] h-[50px] rounded-full bg-blue-600"></div>
-          
-          {/* Last Node with Character */}
-          <div className="absolute top-[calc(50%-25px)] left-[79%] w-[50px] h-[50px] rounded-full bg-blue-600 flex items-center justify-center">
-            <div className="w-[40px] h-[40px] bg-contain bg-center bg-no-repeat" 
-                 style={{ backgroundImage: "url('/character.png')" }}>
-              {/* Fallback if image is missing */}
-              <div className="w-full h-full flex items-center justify-center text-white text-xs">
-                🧙
-              </div>
-            </div>
+          {/* World Nodes with stable HTML/CSS implementation */}
+          <div className="mb-8">
+            <SimpleOverworldGraph />
           </div>
-        </div>
-        
-        {/* Play Button */}
-        <div className="mt-16">
-          <Link href="/storyboard">
-            <Button className="bg-gray-700 hover:bg-gray-800 text-white px-8 py-2 rounded-md">
-              Press Enter to play: Equation Arena
-            </Button>
-          </Link>
+          
+          {/* Play Button removed - User navigates through Math World */}
         </div>
       </main>
       
-      {/* Optional: Cursor */}
-      <div className="absolute bottom-8 left-[50%] transform -translate-x-1/2">
-        <span>🖱️</span>
+      {/* Bottom Tab Navigation - Ensure it spans full width */}
+      <div className="w-full">
+        <TabNavigation
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+        />
       </div>
     </div>
   );

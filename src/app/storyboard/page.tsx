@@ -1,15 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Toaster } from "@/components/ui/sonner";
+import OriginalPage from "../page";
 
 export default function StoryboardPage() {
   // Re-export the original page with a back button
-  
-  // Import the original page
-  const OriginalPage = require('../page').default;
   
   // Render with the Back to Overworld button
   return (
