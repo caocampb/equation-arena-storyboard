@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { HeroPanel } from "@/components/overworld/HeroPanel";
 import { TabNavigation } from "@/components/overworld/TabNavigation";
 import SimpleOverworldGraph from "@/components/overworld/SimpleOverworldGraph";
