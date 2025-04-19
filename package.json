@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "NODE_OPTIONS='--no-experimental-fetch' next build",
+    "vercel-build": "NODE_OPTIONS='--no-experimental-fetch' NEXT_DISABLE_OPTIMIZED_FONT_LOADING=true next build",
     "start": "next start",
     "lint": "next lint"
   },
