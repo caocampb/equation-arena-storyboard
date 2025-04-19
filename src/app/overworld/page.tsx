@@ -38,12 +38,14 @@ export default function Overworld() {
         </div>
       </main>
       
-      {/* Bottom Tab Navigation - Ensure it spans full width */}
-      <div className="w-full">
-        <TabNavigation
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
-        />
+      {/* Bottom Tab Navigation - constrained to match other elements */}
+      <div className="w-full flex justify-center">
+        <div className="max-w-4xl w-full">
+          <TabNavigation
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+          />
+        </div>
       </div>
     </div>
   );
