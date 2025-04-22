@@ -15,13 +15,6 @@ export default function HomePage() {
           <h2 className="text-2xl font-semibold mb-6">Game Components</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
             <ProjectCard 
-              title="Equation Arena" 
-              description="Interactive storyboard for the equation building gameplay experience."
-              href="/storyboard"
-              badgeText="Storyboard"
-            />
-            
-            <ProjectCard 
               title="Overworld Navigation" 
               description="Map-based navigation between different game worlds and progression visualization."
               href="/overworld"
@@ -53,7 +46,7 @@ export default function HomePage() {
                 </p>
               </div>
               <a 
-                href="https://notion.so" 
+                href="https://www.notion.so/df5971f89b3546c6952ed7e857422ebf" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 shrink-0"
