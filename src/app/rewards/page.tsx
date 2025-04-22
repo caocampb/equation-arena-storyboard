@@ -317,22 +317,6 @@ export default function RewardsPage() {
           </button>
         </div>
         
-        {/* Navigation to SubPages */}
-        <div className="mb-6 flex justify-center gap-4">
-          <Link 
-            href="/rewards/skills" 
-            className="py-2 px-4 rounded-lg bg-[#132242] hover:bg-[#1D3055] border border-[#1D3055] text-white font-medium transition-colors"
-          >
-            View Math Skills
-          </Link>
-          <Link 
-            href="/rewards/victory-demo" 
-            className="py-2 px-4 rounded-lg bg-[#132242] hover:bg-[#1D3055] border border-[#1D3055] text-white font-medium transition-colors"
-          >
-            Victory Demo
-          </Link>
-        </div>
-        
         {/* Next reward box (highlight) */}
         <div className="bg-[#132242] border-2 border-[#00C2CB] rounded-lg p-6 mb-6 shadow-[0_0_15px_rgba(0,194,203,0.3)]">
           <h2 className="font-semibold text-white text-lg mb-2">
@@ -360,9 +344,54 @@ export default function RewardsPage() {
             <div className={isClient ? cn(activeTrack === "premium" && !hasPremium ? "opacity-40" : "") : ""}>
               <p className="text-sm text-gray-400 mb-1">FREE:</p>
               <div className="bg-[#0A1122] rounded-lg p-5 h-32 flex items-center justify-center border border-[#1D3055] shadow-md">
-                <div className="text-center">
-                  <span className="text-3xl">✧ * ✧</span>
-                  <p className="text-white font-medium mt-2">Simple Particle Effect</p>
+                <div className="text-center relative overflow-hidden flex flex-col items-center justify-center w-full">
+                  {/* Particle effects container */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    {/* Animated particles */}
+                    {Array.from({ length: 8 }).map((_, i) => (
+                      <motion.div
+                        key={i}
+                        className="absolute w-2 h-2 rounded-full"
+                        style={{
+                          background: `rgba(${Math.random() * 100 + 155}, ${Math.random() * 100 + 155}, 255, 0.8)`,
+                          boxShadow: '0 0 5px 2px rgba(0, 200, 255, 0.5)'
+                        }}
+                        animate={{
+                          x: [0, Math.random() * 30 - 15],
+                          y: [0, Math.random() * 30 - 15],
+                          scale: [0.5, 1, 0.5],
+                          opacity: [0.2, 1, 0.2]
+                        }}
+                        transition={{
+                          duration: 2 + Math.random() * 2,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                      />
+                    ))}
+                  </div>
+                  
+                  {/* Central rotating star */}
+                  <motion.div
+                    className="mb-2 text-[#00E5FF] flex items-center justify-center"
+                    style={{ 
+                      filter: 'drop-shadow(0 0 8px rgba(0, 229, 255, 0.8))'
+                    }}
+                    animate={{ 
+                      rotate: 360,
+                      scale: [1, 1.1, 1]
+                    }}
+                    transition={{ 
+                      rotate: { duration: 10, repeat: Infinity, ease: "linear" },
+                      scale: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+                    }}
+                  >
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 1L15.5 8.5L23 9.5L17.5 15L19 23L12 19L5 23L6.5 15L1 9.5L8.5 8.5L12 1Z" />
+                    </svg>
+                  </motion.div>
+                  
+                  <p className="text-white font-medium mt-auto relative z-10">Simple Particle Effect</p>
                 </div>
               </div>
             </div>
@@ -469,11 +498,38 @@ export default function RewardsPage() {
         )}
         
         {/* Coming Soon Teaser */}
-        <div className="bg-[#132242]/50 border border-[#1D3055] rounded-lg p-3 flex items-center justify-center">
+        <div className="bg-[#132242]/50 border border-[#1D3055] rounded-lg p-3 flex items-center justify-center mb-6">
           <p className="text-sm text-gray-300 flex items-center">
             <span className="mr-2">👀</span>
             <span>Coming Soon • Algebra World accessories & effects!</span>
           </p>
+        </div>
+        
+        {/* Move navigation buttons here as additional resources section */}
+        <div className="border-t border-gray-700 pt-5 mt-2 mb-4">
+          <h3 className="text-white text-sm font-medium mb-3 text-center">Additional Resources</h3>
+          <div className="flex justify-center gap-4">
+            <Link 
+              href="/rewards/skills" 
+              className="py-2 px-4 rounded-lg bg-[#132242] hover:bg-[#1D3055] border border-[#1D3055] text-white font-medium transition-colors flex items-center gap-2"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                <path d="M2 17l10 5 10-5"></path>
+                <path d="M2 12l10 5 10-5"></path>
+              </svg>
+              View Math Skills
+            </Link>
+            <Link 
+              href="/rewards/victory-demo" 
+              className="py-2 px-4 rounded-lg bg-[#132242] hover:bg-[#1D3055] border border-[#1D3055] text-white font-medium transition-colors flex items-center gap-2"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              Victory Demo
+            </Link>
+          </div>
         </div>
       </main>
       

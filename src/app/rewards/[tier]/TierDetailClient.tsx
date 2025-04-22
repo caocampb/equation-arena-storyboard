@@ -203,9 +203,54 @@ export default function TierDetailClient({ tier }: TierDetailClientProps) {
             <div className={isClient ? cn(showPremium && !hasPremium ? "opacity-40" : "") : ""}>
               <p className="text-sm text-gray-400 mb-1">FREE:</p>
               <div className="bg-[#0A1122] rounded-lg p-5 h-32 flex items-center justify-center border border-[#1D3055] shadow-md">
-                <div className="text-center">
-                  <span className="text-3xl">✧ * ✧</span>
-                  <p className="text-white font-medium mt-2">Simple Particle Effect</p>
+                <div className="text-center relative overflow-hidden flex flex-col items-center justify-center w-full">
+                  {/* Particle effects container */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    {/* Animated particles */}
+                    {Array.from({ length: 8 }).map((_, i) => (
+                      <motion.div
+                        key={i}
+                        className="absolute w-2 h-2 rounded-full"
+                        style={{
+                          background: `rgba(${Math.random() * 100 + 155}, ${Math.random() * 100 + 155}, 255, 0.8)`,
+                          boxShadow: '0 0 5px 2px rgba(0, 200, 255, 0.5)'
+                        }}
+                        animate={{
+                          x: [0, Math.random() * 30 - 15],
+                          y: [0, Math.random() * 30 - 15],
+                          scale: [0.5, 1, 0.5],
+                          opacity: [0.2, 1, 0.2]
+                        }}
+                        transition={{
+                          duration: 2 + Math.random() * 2,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                      />
+                    ))}
+                  </div>
+                  
+                  {/* Central rotating star */}
+                  <motion.div
+                    className="mb-2 text-[#00E5FF] flex items-center justify-center"
+                    style={{ 
+                      filter: 'drop-shadow(0 0 8px rgba(0, 229, 255, 0.8))'
+                    }}
+                    animate={{ 
+                      rotate: 360,
+                      scale: [1, 1.1, 1]
+                    }}
+                    transition={{ 
+                      rotate: { duration: 10, repeat: Infinity, ease: "linear" },
+                      scale: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+                    }}
+                  >
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 1L15.5 8.5L23 9.5L17.5 15L19 23L12 19L5 23L6.5 15L1 9.5L8.5 8.5L12 1Z" />
+                    </svg>
+                  </motion.div>
+                  
+                  <p className="text-white font-medium mt-auto relative z-10">Simple Particle Effect</p>
                 </div>
               </div>
             </div>
