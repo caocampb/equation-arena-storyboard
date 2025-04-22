@@ -1,12 +1,22 @@
 "use client";
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { HeroPanel } from "@/components/overworld/HeroPanel";
 import { TabNavigation } from "@/components/overworld/TabNavigation";
 import SimpleOverworldGraph from "@/components/overworld/SimpleOverworldGraph";
 import { useGameState } from "@/context/GameStateContext";
 
 export default function Overworld() {
+  const router = useRouter();
   const { activeTab, setActiveTab, playerStats } = useGameState();
+  
+  // Handle tab navigation
+  useEffect(() => {
+    if (activeTab === "rewards") {
+      router.push("/rewards");
+    }
+  }, [activeTab, router]);
   
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0A1930] to-[#15295A] flex flex-col items-center">
@@ -20,7 +30,7 @@ export default function Overworld() {
           achievementCount={playerStats.achievementCount}
           totalAchievements={playerStats.totalAchievements}
         />
-      </div>
+        </div>
       
       {/* Main Content Area - Worlds Map */}
       <main className="flex-1 relative p-4 flex flex-col items-center justify-center overflow-hidden w-full">

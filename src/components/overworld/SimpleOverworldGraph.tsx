@@ -36,15 +36,15 @@ export default function SimpleOverworldGraph() {
       // Update player position marker after a short delay
       setTimeout(() => {
         setPlayerPosition(nodeId);
-        // Add to visited nodes if not already there
-        if (!visitedNodes.includes(nodeId)) {
-          setVisitedNodes([...visitedNodes, nodeId]);
-        }
+      // Add to visited nodes if not already there
+      if (!visitedNodes.includes(nodeId)) {
+        setVisitedNodes([...visitedNodes, nodeId]);
+      }
       }, 150);
       // Navigation is handled by the Link component on Math World
     }
   };
-
+  
   // Check if connection is active (based on visited nodes)
   const isConnectionActive = (node1: NodeId, node2: NodeId) => {
     // A connection is active if BOTH nodes have been visited
@@ -311,8 +311,8 @@ export default function SimpleOverworldGraph() {
                 >
                   <span className="sr-only">Navigate to Math World</span>
                 </Link>
-              </div>
-            </foreignObject>
+                </div>
+              </foreignObject>
           )}
         </g>
 
@@ -355,7 +355,7 @@ export default function SimpleOverworldGraph() {
       </div>
     </div>
   );
-}
+} 
 
 // Separate PlayerIcon component for clarity
 const PlayerIcon = ({ position, nodes }: { position: NodeId, nodes: Record<NodeId, {x: number, y: number}> }) => {

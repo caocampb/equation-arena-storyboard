@@ -24,10 +24,12 @@ interface GameState {
   worlds: Record<string, WorldProgress>;
   activeWorld: string | null;
   activeTab: string;
+  hasPremium: boolean;
   setActiveTab: (tab: string) => void;
   unlockWorld: (worldId: string) => void;
   updateWorldProgress: (worldId: string, newCompletion: number) => void;
   setActiveWorld: (worldId: string | null) => void;
+  togglePremium: () => void;
 }
 
 // Create the context
@@ -71,10 +73,12 @@ const initialState: GameState = {
   },
   activeWorld: null,
   activeTab: "play",
+  hasPremium: false,
   setActiveTab: () => {},
   unlockWorld: () => {},
   updateWorldProgress: () => {},
   setActiveWorld: () => {},
+  togglePremium: () => {},
 };
 
 // Create the provider component
@@ -88,7 +92,7 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
       if (storedState) {
         try {
           // Add try-catch for parsing errors
-          return JSON.parse(storedState);
+        return JSON.parse(storedState);
         } catch (error) {
           console.error("Error parsing gameState from localStorage:", error);
           // Clear invalid state from localStorage
@@ -103,7 +107,7 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (typeof window !== "undefined") {
       try {
-        localStorage.setItem("gameState", JSON.stringify(state));
+      localStorage.setItem("gameState", JSON.stringify(state));
       } catch (error) {
         console.error("Error saving gameState to localStorage:", error);
       }
@@ -153,6 +157,14 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
     setState((prev: GameState) => ({ ...prev, activeWorld: worldId }));
   }, []);
 
+  // Add toggle premium function
+  const togglePremium = useCallback(() => {
+    setState((prev: GameState) => ({ 
+      ...prev, 
+      hasPremium: !prev.hasPremium 
+    }));
+  }, []);
+
   // Provide the state and stable updater functions
   const value = {
     ...state,
@@ -160,6 +172,7 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
     unlockWorld,
     updateWorldProgress,
     setActiveWorld,
+    togglePremium,
   };
 
   return (

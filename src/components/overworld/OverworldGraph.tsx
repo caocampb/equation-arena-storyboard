@@ -40,7 +40,7 @@ export default function OverworldGraph() {
       }
     }
   }, [worlds, visitedNodes, router]);
-
+  
   // Handle keyboard navigation
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {

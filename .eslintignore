@@ -1,0 +1,18 @@
+# Build output
+.next/
+out/
+dist/
+build/
+
+# Generated type definitions
+**/*.d.ts
+
+# Node modules
+node_modules/
+
+# Cache directories
+.cache/
+.vercel/
+
+# Development configurations
+.vscode/ 

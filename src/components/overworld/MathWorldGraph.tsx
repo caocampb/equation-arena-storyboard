@@ -87,7 +87,7 @@ export default function MathWorldGraph() {
 
   // Determine Golden Path status
   const isPathToArenaGolden = currentPosition === 'start-node';
-
+  
   return (
     <div className="w-full h-[500px] flex items-center justify-center relative">
       {/* SVG Container */}
@@ -168,7 +168,7 @@ export default function MathWorldGraph() {
                 <foreignObject x="-12" y="-12" width="24" height="24">
                   <div className="h-full flex items-center justify-center">
                     <MapPinIcon className="w-4 h-4 text-white" /> 
-                  </div>
+      </div>
                 </foreignObject>
               </g>
             );
@@ -202,10 +202,10 @@ export default function MathWorldGraph() {
                           {isArena && <div className="text-3xl" style={{marginTop: '-4px'}}>🔥</div>}
                           <div className="text-white text-sm font-display font-bold tracking-wide leading-tight mt-1">
                             {isArena ? 'Equation Arena' : 'Future Content'}
-                          </div>
+      </div>
                         </>
                       )}
-                    </div>
+        </div>
                   </foreignObject>
                   {/* Link only on Arena node */}
                   {isArena && (
@@ -216,7 +216,7 @@ export default function MathWorldGraph() {
                           className="block h-full w-full opacity-0 rounded-full focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#0A1930] focus:ring-[#00C2CB]"
                           aria-label="Navigate to Equation Arena"
                         />
-                      </div>
+      </div>
                     </foreignObject>
                   )}
                 </g>

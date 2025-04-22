@@ -360,3 +360,32 @@
 .shadow-glow-yellow {
   box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
 }
+
+/* Add premium button animations */
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) skew(45deg);
+  }
+  100% {
+    transform: translateX(200%) skew(45deg);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    opacity: 0.5;
+    filter: blur(10px);
+  }
+  50% {
+    opacity: 0.8;
+    filter: blur(12px);
+  }
+}
+
+.animate-shine {
+  animation: shine 1.5s ease forwards;
+}
+
+.animate-glow-slow {
+  animation: glow 3s ease-in-out infinite;
+}
