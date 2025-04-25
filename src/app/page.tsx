@@ -29,10 +29,10 @@ export default function HomePage() {
             />
             
             <ProjectCard 
-              title="Player Journey" 
-              description="End-to-end flow of the player experience from onboarding to mastery."
-              href="/storyboard"
-              badgeText="Coming Soon"
+              title="Player Flow" 
+              description="How players move through game components and earn rewards"
+              href="/flow"
+              badgeText="Mockup"
             />
           </div>
           

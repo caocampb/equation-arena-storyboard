@@ -11,6 +11,11 @@ export default function Overworld() {
   const router = useRouter();
   const { activeTab, setActiveTab, playerStats } = useGameState();
   
+  // Set active tab on component mount
+  useEffect(() => {
+    setActiveTab("play");
+  }, [setActiveTab]);
+  
   // Handle tab navigation
   useEffect(() => {
     if (activeTab === "rewards") {

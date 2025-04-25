@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "../../style/flows.css";
 import { GameStateProvider } from "@/context/GameStateContext";
 
 const spaceGrotesk = Space_Grotesk({ 

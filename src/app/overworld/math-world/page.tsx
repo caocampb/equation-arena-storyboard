@@ -14,10 +14,11 @@ export default function MathWorld() {
   const { activeTab, setActiveTab, playerStats, worlds, setActiveWorld } = useGameState();
   const mathWorld = worlds["math-world"];
   
-  // Set active world on mount
+  // Set active world and tab on mount
   useEffect(() => {
     setActiveWorld("math-world");
-  }, [setActiveWorld]);
+    setActiveTab("play");
+  }, [setActiveWorld, setActiveTab]);
   
   // Handle tab navigation
   useEffect(() => {

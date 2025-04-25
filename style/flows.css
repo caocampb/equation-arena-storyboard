@@ -1,0 +1,31 @@
+@tailwind base;
+
+@layer utilities {
+  /* 
+    Add tailwind utilities specifically for the flow visualizations 
+    These will be properly tree-shaken since we're using @layer
+  */
+  
+  /* Subtle pulse animation for reward paths and special nodes */
+  .animate-pulse-subtle {
+    animation: pulse 3s infinite;
+  }
+  
+  /* Glow effect for nodes */
+  .shadow-glow {
+    filter: drop-shadow(0 0 8px rgba(0, 194, 203, 0.5));
+  }
+  
+  .shadow-glow-gold {
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+} 

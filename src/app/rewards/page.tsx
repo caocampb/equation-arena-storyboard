@@ -16,12 +16,15 @@ export default function RewardsPage() {
   const [tutorialStep, setTutorialStep] = useState(1);
   const [showUnlockAnimation, setShowUnlockAnimation] = useState(false);
   const [isClient, setIsClient] = useState(false);
+  const [showParticles, setShowParticles] = useState(false);
 
   // Use useEffect to set client-side state
   useEffect(() => {
     setIsClient(true);
     // Now we can safely show tutorial once we're on client
     setShowTutorial(true);
+    // And safely show particles once we're client-side
+    setShowParticles(true);
   }, []);
   
   // Mock data for battle pass tiers
@@ -347,8 +350,8 @@ export default function RewardsPage() {
                 <div className="text-center relative overflow-hidden flex flex-col items-center justify-center w-full">
                   {/* Particle effects container */}
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    {/* Animated particles */}
-                    {Array.from({ length: 8 }).map((_, i) => (
+                    {/* Only render particles client-side */}
+                    {showParticles && Array.from({ length: 8 }).map((_, i) => (
                       <motion.div
                         key={i}
                         className="absolute w-2 h-2 rounded-full"

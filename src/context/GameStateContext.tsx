@@ -83,31 +83,29 @@ const initialState: GameState = {
 
 // Create the provider component
 export function GameStateProvider({ children }: { children: ReactNode }) {
-  // We'll use local storage to persist the state
-  const [state, setState] = useState<GameState>(() => {
-    // Check if we're in the browser
+  // Start with the same state on both server and client
+  const [state, setState] = useState<GameState>(initialState);
+
+  // Load from localStorage only on the client after initial render
+  useEffect(() => {
     if (typeof window !== "undefined") {
-      // Try to get state from localStorage
       const storedState = localStorage.getItem("gameState");
       if (storedState) {
         try {
-          // Add try-catch for parsing errors
-        return JSON.parse(storedState);
+          setState(JSON.parse(storedState));
         } catch (error) {
           console.error("Error parsing gameState from localStorage:", error);
-          // Clear invalid state from localStorage
           localStorage.removeItem("gameState");
         }
       }
     }
-    return initialState;
-  });
-
+  }, []);
+  
   // Save to localStorage when state changes
   useEffect(() => {
     if (typeof window !== "undefined") {
       try {
-      localStorage.setItem("gameState", JSON.stringify(state));
+        localStorage.setItem("gameState", JSON.stringify(state));
       } catch (error) {
         console.error("Error saving gameState to localStorage:", error);
       }
