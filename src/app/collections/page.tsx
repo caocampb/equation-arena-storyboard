@@ -355,7 +355,7 @@ export default function CollectionsPage() {
                     
                     {/* Title */}
                     <h3 className={cn(
-                      "text-sm font-medium text-center",
+                      "text-sm font-medium text-center text-white",
                       !item.discovered && "blur-sm"
                     )}>
                       {item.discovered ? item.name : "???"}
@@ -399,7 +399,10 @@ export default function CollectionsPage() {
             </div>
           </div>
           
-          <p className="text-gray-300 text-sm">
+          <p className={cn(
+            "text-sm",
+            activeCategory === 'achievements' ? "text-white" : "text-gray-300"
+          )}>
             {activeCategory === 'properties' && "Collect different mathematical properties by using them in battles. Each property unlocks special rewards and abilities."}
             {activeCategory === 'equations' && "Discover and master different types of equations to add them to your collection. Each mastered equation type provides unique rewards."}
             {activeCategory === 'victories' && "Record of your victories against various math enemies. Each victory unlocks special rewards and progresses the story."}
