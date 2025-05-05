@@ -5,7 +5,6 @@ import Link from "next/link";
 import { ArrowLeftIcon, CheckIcon, XIcon, CrownIcon } from "lucide-react";
 import { motion } from "framer-motion";
 import { HeroPanel } from "@/components/overworld/HeroPanel";
-import { TabNavigation } from "@/components/overworld/TabNavigation";
 import { useGameState } from "@/context/GameStateContext";
 import { cn } from "@/lib/utils";
 
@@ -217,12 +216,11 @@ export default function SkillsPage() {
       </main>
       
       {/* Bottom tab navigation */}
-      <div className="w-full flex justify-center mt-auto">
-        <div className="max-w-4xl w-full">
-          <TabNavigation
-            activeTab="rewards"
-            onTabChange={setActiveTab}
-          />
+      {/* TabNavigation removed - Now using ESC menu (press ESC key) */}
+      <div className="fixed bottom-0 left-0 right-0 flex justify-center p-1 bg-[#0A1122]/60 backdrop-blur-sm border-t border-[#1D3055]/50 z-10">
+        <div className="flex items-center gap-1.5 text-white/60 text-xs font-medium">
+          <kbd className="px-1.5 py-0.5 bg-[#132242]/80 rounded border border-[#1D3055]/70 text-[#00C2CB] text-xs">ESC</kbd>
+          <span>Press to access menu</span>
         </div>
       </div>
     </div>

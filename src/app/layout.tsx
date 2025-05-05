@@ -3,6 +3,8 @@ import { Space_Grotesk, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "../../style/flows.css";
 import { GameStateProvider } from "@/context/GameStateContext";
+import { EscMenu } from "@/components/esc-menu/EscMenu";
+import { EscKeyListener } from "@/components/esc-menu/KeyListener";
 
 const spaceGrotesk = Space_Grotesk({ 
   subsets: ["latin"],
@@ -34,6 +36,10 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} font-sans`}>
         <GameStateProvider>
           {children}
+          
+          {/* ESC Menu components */}
+          <EscMenu />
+          <EscKeyListener />
         </GameStateProvider>
       </body>
     </html>

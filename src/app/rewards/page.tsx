@@ -5,7 +5,6 @@ import Link from "next/link";
 import { ArrowLeftIcon, LockIcon, EyeIcon, CheckIcon, SparklesIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HeroPanel } from "@/components/overworld/HeroPanel";
-import { TabNavigation } from "@/components/overworld/TabNavigation";
 import { useGameState } from "@/context/GameStateContext";
 import { cn } from "@/lib/utils";
 
@@ -509,7 +508,7 @@ export default function RewardsPage() {
         </div>
         
         {/* Move navigation buttons here as additional resources section */}
-        <div className="border-t border-gray-700 pt-5 mt-2 mb-4">
+        <div className="border-t border-gray-700 pt-5 mt-2 mb-20">
           <h3 className="text-white text-sm font-medium mb-3 text-center">Additional Resources</h3>
           <div className="flex justify-center gap-4">
             <Link 
@@ -536,13 +535,11 @@ export default function RewardsPage() {
         </div>
       </main>
       
-      {/* Bottom tab navigation */}
-      <div className="w-full flex justify-center mt-auto">
-        <div className="max-w-4xl w-full">
-          <TabNavigation
-            activeTab={activeTab}
-            onTabChange={setActiveTab}
-          />
+      {/* TabNavigation removed - Now using ESC menu (press ESC key) */}
+      <div className="fixed bottom-0 left-0 right-0 flex justify-center p-1 bg-[#0A1122]/60 backdrop-blur-sm border-t border-[#1D3055]/50 z-10">
+        <div className="flex items-center gap-1.5 text-white/60 text-xs font-medium">
+          <kbd className="px-1.5 py-0.5 bg-[#132242]/80 rounded border border-[#1D3055]/70 text-[#00C2CB] text-xs">ESC</kbd>
+          <span>Press to access menu</span>
         </div>
       </div>
     </div>
