@@ -21,7 +21,7 @@ interface Skill {
 }
 
 export default function SkillsPage() {
-  const { setActiveTab, playerStats } = useGameState();
+  const { playerStats } = useGameState();
   const [isClient, setIsClient] = useState(false);
   
   // Sample skill data - would come from backend in production

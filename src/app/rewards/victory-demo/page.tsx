@@ -8,7 +8,7 @@ import { useGameState } from "@/context/GameStateContext";
 import VictoryXPOverlay from "@/components/overworld/VictoryXPOverlay";
 
 export default function VictoryDemoPage() {
-  const { setActiveTab, playerStats } = useGameState();
+  const { playerStats } = useGameState();
   const [showVictory, setShowVictory] = useState(false);
   
   // Mock data for victory overlay

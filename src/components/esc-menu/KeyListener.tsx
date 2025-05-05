@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useEscMenuStore } from '@/context/useEscMenuStore'
 
 export const EscKeyListener = () => {
@@ -7,7 +7,13 @@ export const EscKeyListener = () => {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       // TODO: Add logic to prevent opening if other modals are open
-      if (e.key === 'Escape') isOpen ? close() : open()
+      if (e.key === 'Escape') {
+        if (isOpen) {
+          close();
+        } else {
+          open();
+        }
+      }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)

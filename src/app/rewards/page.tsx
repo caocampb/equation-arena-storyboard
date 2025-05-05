@@ -9,7 +9,7 @@ import { useGameState } from "@/context/GameStateContext";
 import { cn } from "@/lib/utils";
 
 export default function RewardsPage() {
-  const { activeTab, setActiveTab, playerStats, hasPremium, togglePremium } = useGameState();
+  const { playerStats, hasPremium, togglePremium } = useGameState();
   const [activeTrack, setActiveTrack] = useState<"free" | "premium">("free");
   const [showTutorial, setShowTutorial] = useState(false); // Change default to false to avoid hydration issues
   const [tutorialStep, setTutorialStep] = useState(1);

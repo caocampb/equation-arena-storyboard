@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { ArrowLeftIcon, RotateCwIcon, ZapIcon, SparklesIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -31,7 +31,6 @@ interface InventoryItem {
 export default function CharacterPage() {
   const { playerStats, hasPremium } = useGameState();
   const [activeTab, setActiveTab] = useState<"skins" | "effects" | "accessories">("skins");
-  const [isRotating, setIsRotating] = useState(false);
   const [showingBack, setShowingBack] = useState(false);
   const [showItemDetail, setShowItemDetail] = useState<string | null>(null);
   const [showPremiumModal, setShowPremiumModal] = useState(false);
@@ -210,12 +209,6 @@ export default function CharacterPage() {
   const getEquippedHeadAccessory = () => {
     const acc = inventoryItems.find(item => item.id === equippedItems.headAccessory);
     return acc?.image || "";
-  };
-  
-  // Get equipped effect
-  const getEquippedEffect = () => {
-    const effect = inventoryItems.find(item => item.id === equippedItems.effect);
-    return effect?.id || "none";
   };
   
   // Get rarity color
