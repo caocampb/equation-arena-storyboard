@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import TierDetailClient from '@/app/rewards/[tier]/TierDetailClient';
+import TierDetailClient from '@/app/(game)/rewards/[tier]/TierDetailClient';
 
 // Loading fallback component
 function TierDetailSkeleton() {
