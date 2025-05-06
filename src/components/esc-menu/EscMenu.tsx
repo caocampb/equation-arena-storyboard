@@ -96,7 +96,7 @@ export const EscMenu = () => {
     }}>
       <DialogContent 
         onOpenAutoFocus={(e: React.FocusEvent) => e.preventDefault()} 
-        className="sm:max-w-md p-0 overflow-visible border-0 outline-0 shadow-none bg-transparent menu-animation flex items-center justify-center left-1/2 -translate-x-1/2">
+        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 sm:max-w-md p-0 overflow-visible border-0 outline-0 shadow-none bg-transparent">
         {/* Stardew-inspired wooden panel - with corner nails */}
         <div className="stardew-menu-container mx-auto">
           {/* Corner nails */}
@@ -160,26 +160,7 @@ export const EscMenu = () => {
           /* Add pixel-style font if available */
           @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
           
-          /* Menu open animation - updated for centered positioning */
-          .menu-animation {
-            animation: menuAppear 0.25s ease-out;
-            margin: 0 auto;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-          }
-          
-          @keyframes menuAppear {
-            from {
-              opacity: 0;
-              transform: translateY(-55%);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(-50%);
-            }
-          }
-          
+          /* Remove menu animation temporarily to fix positioning */
           /* Button animation on open */
           .menu-button-animation {
             animation: buttonAppear 0.3s ease-out backwards;
