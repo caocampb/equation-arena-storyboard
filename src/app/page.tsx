@@ -46,12 +46,26 @@ export default function HomePage() {
                 </p>
               </div>
               <a 
-                href="https://www.notion.so/df5971f89b3546c6952ed7e857422ebf" 
+                href="https://www.notion.so/trilogy-enterprises/CADemy-Game-Docs-1e0f1e2d90e480ea986dfd57d0c7afbd-e20d6412fb5a47348bb72d78adaa7940?pvs=4" 
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 shrink-0"
+                className="inline-flex items-center justify-center rounded-md bg-gradient-to-b from-primary to-primary/90 px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition-all hover:shadow hover:translate-y-[-1px] hover:bg-primary/95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 shrink-0"
               >
                 Open in Notion
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="ml-2 h-4 w-4 transition-all duration-200 ease-in-out"
+                >
+                  <path d="M7 17l9.2-9.2M17 17V7H7"/>
+                </svg>
               </a>
             </div>
           </div>
@@ -99,20 +113,20 @@ function ProjectCard({
       <p className="text-muted-foreground text-sm mb-4">{description}</p>
       <Link 
         href={href}
-        className="text-sm text-muted-foreground inline-flex items-center transition-all duration-200 ease-in-out opacity-75 hover:opacity-100 group-hover:translate-x-[1px]"
+        className="inline-flex items-center justify-center rounded-md bg-gradient-to-b from-white to-gray-50 border border-gray-200 px-4 py-2 text-sm font-medium text-primary hover:text-primary/90 shadow-sm transition-all hover:shadow hover:translate-y-[-1px] hover:border-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
       >
         View Component
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="14"
-          height="14"
+          width="16"
+          height="16"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          strokeWidth="1.5"
+          strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="ml-1.5 h-3 w-3 transition-transform duration-200 ease-in-out group-hover:translate-x-[1px]"
+          className="ml-2 h-4 w-4 transition-all duration-200 ease-in-out group-hover:translate-x-[2px]"
         >
           <path d="M9 18l6-6-6-6"/>
         </svg>

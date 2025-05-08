@@ -1,0 +1,158 @@
+/* Stardew Valley-inspired Wood Panel Styling */
+
+/* Outer container to hold nails */
+.wood-panel-outer {
+  position: relative; /* For absolute positioning of nails */
+  padding: 0;         /* No padding - we'll position nails directly on the wooden panel */
+  width: max-content;
+  max-width: 100%;
+}
+
+.wood-panel {
+  background: linear-gradient(to bottom, #8b5e3c, #6d472c);
+  border: 4px solid #3d2813;
+  box-shadow: 0 0 0 1px #67492f, 0 6px 15px rgba(0,0,0,0.5);
+  border-radius: 12px;
+  color: #f2e9db;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  padding: 8px; /* Add padding to the panel itself */
+}
+
+.wood-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 12px,
+      rgba(0,0,0,0.035) 12px,
+      rgba(0,0,0,0.035) 24px
+    ),
+    url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0V0zm40 40h-4v-4h4v4zm0-8h-4v-4h4v4zm0-8h-4v-4h4v4zM4 40H0v-4h4v4zm8 0H8v-4h4v4zm8 0h-4v-4h4v4zm8 0h-4v-4h4v4z' fill='%23000000' fill-opacity='0.02' fill-rule='evenodd'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.7;
+}
+
+/* Inner wood content area */
+.wood-inner {
+  background: rgba(0,0,0,0.15);
+  border-radius: 8px;
+  padding: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.wood-inner-header {
+  padding: 10px 12px;
+  cursor: pointer;
+  border-bottom: 2px solid #3d2813;
+  background: rgba(0,0,0,0.15);
+  transition: background 0.2s;
+  position: relative;
+}
+
+.wood-inner-content {
+  background: rgba(0,0,0,0.05);
+  padding: 10px 12px;
+  position: relative;
+}
+
+/* Corner nail decorations */
+.nail {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #2a1a0a;
+  border-radius: 50%;
+  border: 1px solid #ffd37a;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.5);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.nail::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 1px;
+  width: 3px;
+  height: 2px;
+  background: rgba(255,255,255,0.4);
+  border-radius: 50%;
+  transform: rotate(30deg);
+}
+
+/* Positioning the nails directly on the panel */
+.nail-top-left { top: 8px; left: 8px; }
+.nail-top-right { top: 8px; right: 8px; }
+.nail-bottom-left { bottom: 8px; left: 8px; }
+.nail-bottom-right { bottom: 8px; right: 8px; }
+
+/* Wood badge styles for buttons and small elements */
+.wood-badge {
+  background: #5a3921;
+  color: #f2e9db;
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-size: 12px;
+  border: 1px solid #3d2813;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+  transition: all 0.2s;
+}
+
+.wood-badge:hover {
+  background: #704c2a;
+  transform: translateY(-1px);
+}
+
+/* Title styling for headings */
+.wood-title-bar {
+  background: linear-gradient(to bottom, #5a3921, #472c17);
+  border-bottom: 2px solid #3d2813;
+  padding: 12px;
+  text-align: center;
+  font-family: 'VT323', monospace;
+  font-size: 24px;
+  font-weight: bold;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+  color: #f8e4bc;
+}
+
+/* Tooltip styling */
+.wood-tooltip {
+  position: absolute;
+  background-color: #5a3921;
+  color: #f2e9db;
+  text-align: center;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 11px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+  border: 1px solid #3d2813;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  z-index: 100;
+}
+
+/* Progress bar styling */
+.wood-progress-container {
+  background: rgba(0,0,0,0.3);
+  height: 6px;
+  border-radius: 3px;
+  border: 1px solid #3d2813;
+  overflow: hidden;
+}
+
+.wood-progress-bar {
+  background: linear-gradient(to right, #ffd700, #ffc000);
+  border-radius: 3px;
+  height: 100%;
+} 

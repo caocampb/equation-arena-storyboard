@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { HomeIcon, GiftIcon, UserIcon, PlayIcon, LayersIcon, ChevronRightIcon } from "lucide-react"
+import { ShoppingBagIcon } from "@/components/ui/icons"
 import {
   Dialog,
   DialogContent,
@@ -11,12 +12,14 @@ import {
 } from "@/components/ui/dialog"
 import { useEscMenuStore } from "@/context/useEscMenuStore"
 import { cn } from "@/lib/utils"
+import { WoodPanel } from "@/components/ui/wood-panel"
 
 const getTabFromPath = (path: string | null): string => {
   if (!path) return 'play';
   if (path.includes('/rewards')) return 'rewards';
   if (path.includes('/character')) return 'character';
   if (path.includes('/collections')) return 'collections';
+  if (path.includes('/shop')) return 'shop';
   if (path.includes('/overworld') || path === '/') return 'play';
   // Add other potential base paths if needed, otherwise default
   return 'play'; // Default if no match
@@ -70,6 +73,9 @@ export const EscMenu = () => {
         case 'l': // (Co)llections - using L since C is taken
           handleNavigation('collections');
           break;
+        case 's': // Shop - new shortcut
+          handleNavigation('shop');
+          break;
         case 'escape': // ESC also works as Resume
           handleNavigation('resume');
           break;
@@ -97,19 +103,31 @@ export const EscMenu = () => {
       <DialogContent 
         onOpenAutoFocus={(e: React.FocusEvent) => e.preventDefault()} 
         className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 sm:max-w-md p-0 overflow-visible border-0 outline-0 shadow-none bg-transparent">
-        {/* Stardew-inspired wooden panel - with corner nails */}
-        <div className="stardew-menu-container mx-auto">
-          {/* Corner nails */}
-          <div className="nail nail-top-left"></div>
-          <div className="nail nail-top-right"></div>
-          <div className="nail nail-bottom-left"></div>
-          <div className="nail nail-bottom-right"></div>
-          
-          {/* Title with wooden header */}
-          <DialogHeader className="stardew-title-bar p-0">
-            <DialogTitle className="stardew-title">Game Menu</DialogTitle>
-          </DialogHeader>
-
+        {/* Maintain the DialogTitle for accessibility */}
+        <DialogHeader className="sr-only">
+          <DialogTitle>Game Menu</DialogTitle>
+        </DialogHeader>
+        
+        {/* Use the WoodPanel with a custom title that uses system fonts */}
+        <WoodPanel 
+          panelTitle={
+            <span style={{ 
+              fontFamily: "'Courier New', monospace", 
+              fontWeight: 'bold',
+              letterSpacing: '1px'
+            }}>
+              Game Menu
+            </span>
+          }
+          nailPositions={{
+            topLeft: [24, 24],
+            topRight: [24, 24],
+            bottomLeft: [24, 24],
+            bottomRight: [24, 24]
+          }}
+          className="mx-auto"
+          innerClassName="p-0"
+        >
           {/* Vertical menu navigation */}
           <div className="w-full px-4 pb-4 pt-2">
             <div className="stardew-button-container">
@@ -118,6 +136,7 @@ export const EscMenu = () => {
                 { id: "rewards", label: "REWARDS", shortcut: "R", icon: <GiftIcon className="h-5 w-5" /> },
                 { id: "character", label: "CHARACTER", shortcut: "C", icon: <UserIcon className="h-5 w-5" /> },
                 { id: "collections", label: "COLLECTIONS", shortcut: "L", icon: <LayersIcon className="h-5 w-5" /> },
+                { id: "shop", label: "SHOP", shortcut: "S", icon: <ShoppingBagIcon className="h-5 w-5" /> },
                 { id: "resume", label: "RESUME", shortcut: "ESC", icon: <PlayIcon className="h-5 w-5" /> }
               ].map((tab) => (
                 <button
@@ -153,28 +172,13 @@ export const EscMenu = () => {
             {/* Version indicator */}
             <div className="version-indicator">v0.1</div>
           </div>
-        </div>
+        </WoodPanel>
 
-        {/* Stardew Valley-inspired CSS with enhanced polish */}
-        <style jsx global>{`
-          /* Add pixel-style font if available */
-          @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-          
-          /* Remove menu animation temporarily to fix positioning */
+        {/* Component styles */}
+        <style jsx>{`
           /* Button animation on open */
           .menu-button-animation {
             animation: buttonAppear 0.3s ease-out backwards;
-          }
-          
-          @keyframes buttonAppear {
-            from {
-              opacity: 0;
-              transform: translateX(-15px);
-            }
-            to {
-              opacity: 1;
-              transform: translateX(0);
-            }
           }
           
           /* Staggered animation for buttons */
@@ -183,111 +187,6 @@ export const EscMenu = () => {
           .stardew-button-container button:nth-child(3) { animation-delay: 0.15s; }
           .stardew-button-container button:nth-child(4) { animation-delay: 0.2s; }
           .stardew-button-container button:nth-child(5) { animation-delay: 0.25s; }
-          
-          /* Main container styling with enhanced wood texture */
-          .stardew-menu-container {
-            background: linear-gradient(to bottom, #8b5e3c, #6d472c);
-            border: 5px solid #3d2813;
-            box-shadow: 0 0 0 2px #67492f, 0 6px 15px rgba(0,0,0,0.5);
-            border-radius: 10px;
-            color: #f2e9db;
-            position: relative;
-            overflow: hidden;
-            padding-bottom: 6px;
-            max-width: 340px; /* Increased width for more space */
-          }
-          
-          /* Enhanced wood grain texture */
-          .stardew-menu-container::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background-image: 
-              repeating-linear-gradient(
-                90deg,
-                transparent,
-                transparent 12px,
-                rgba(0,0,0,0.035) 12px,
-                rgba(0,0,0,0.035) 24px
-              ),
-              url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0V0zm40 40h-4v-4h4v4zm0-8h-4v-4h4v4zm0-8h-4v-4h4v4zM4 40H0v-4h4v4zm8 0H8v-4h4v4zm8 0h-4v-4h4v4zm8 0h-4v-4h4v4z' fill='%23000000' fill-opacity='0.02' fill-rule='evenodd'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.7;
-          }
-          
-          /* Corner nail decorations */
-          .nail {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: #2a1a0a;
-            border-radius: 50%;
-            border: 1px solid #ffd37a;
-            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.5);
-            z-index: 2;
-          }
-          
-          .nail::after {
-            content: "";
-            position: absolute;
-            top: 2px;
-            left: 1px;
-            width: 3px;
-            height: 2px;
-            background: rgba(255,255,255,0.4);
-            border-radius: 50%;
-            transform: rotate(30deg);
-          }
-          
-          .nail-top-left { top: 7px; left: 7px; }
-          .nail-top-right { top: 7px; right: 7px; }
-          .nail-bottom-left { bottom: 7px; left: 7px; }
-          .nail-bottom-right { bottom: 7px; right: 7px; }
-          
-          /* Version indicator */
-          .version-indicator {
-            font-size: 10px;
-            color: rgba(255,255,255,0.3);
-            text-align: right;
-            padding: 4px 6px 0 0;
-            font-family: monospace;
-          }
-          
-          /* Title bar styling with enhanced wood grain */
-          .stardew-title-bar {
-            background: linear-gradient(to right, #5d3b1b, #7a4a23, #5d3b1b);
-            padding: 10px 0;
-            text-align: center;
-            border-bottom: 3px solid #3d2813;
-            margin-bottom: 8px;
-            position: relative;
-            z-index: 1;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-          }
-          
-          .stardew-title-bar::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background-image: repeating-linear-gradient(
-              0deg,
-              transparent,
-              transparent 4px,
-              rgba(0,0,0,0.03) 4px,
-              rgba(0,0,0,0.03) 8px
-            );
-            pointer-events: none;
-          }
-          
-          .stardew-title {
-            font-family: 'VT323', monospace;
-            color: #ecd9bc;
-            font-size: 22px;
-            letter-spacing: 1px;
-            margin: 0;
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.3);
-          }
           
           /* Button container - now vertical with enhanced styling */
           .stardew-button-container {
@@ -301,6 +200,15 @@ export const EscMenu = () => {
             gap: 4px;
             z-index: 1;
             box-shadow: inset 0 0 8px rgba(0,0,0,0.2);
+          }
+          
+          /* Version indicator */
+          .version-indicator {
+            font-size: 10px;
+            color: rgba(255,255,255,0.3);
+            text-align: right;
+            padding: 4px 6px 0 0;
+            font-family: monospace;
           }
           
           /* Keyboard shortcut styling */

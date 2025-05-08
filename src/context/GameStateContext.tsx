@@ -12,6 +12,9 @@ interface WorldProgress {
   totalActivities: number;
 }
 
+// Inventory type to track owned items
+type Inventory = Record<string, boolean>;
+
 interface GameState {
   playerStats: {
     username: string;
@@ -20,6 +23,7 @@ interface GameState {
     xpProgress: number;
     achievementCount: number;
     totalAchievements: number;
+    inventory: Inventory;
   };
   worlds: Record<string, WorldProgress>;
   activeWorld: string | null;
@@ -30,6 +34,9 @@ interface GameState {
   updateWorldProgress: (worldId: string, newCompletion: number) => void;
   setActiveWorld: (worldId: string | null) => void;
   togglePremium: () => void;
+  buyItem: (itemId: string, price: number) => boolean;
+  isItemOwned: (itemId: string) => boolean;
+  addCoins: (amount: number) => void;
 }
 
 // Create the context
@@ -44,6 +51,7 @@ const initialState: GameState = {
     xpProgress: 60,
     achievementCount: 3,
     totalAchievements: 10,
+    inventory: {}, // Empty inventory to start
   },
   worlds: {
     "math-world": {
@@ -79,6 +87,9 @@ const initialState: GameState = {
   updateWorldProgress: () => {},
   setActiveWorld: () => {},
   togglePremium: () => {},
+  buyItem: () => false,
+  isItemOwned: () => false,
+  addCoins: () => {},
 };
 
 // Create the provider component
@@ -163,6 +174,59 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
     }));
   }, []);
 
+  // Function to buy an item
+  const buyItem = useCallback((itemId: string, price: number): boolean => {
+    let success = false;
+    
+    setState((prev: GameState) => {
+      // Check if the player has enough coins
+      if (prev.playerStats.coins < price) {
+        success = false;
+        return prev; // Not enough coins, return unchanged state
+      }
+      
+      // Check if the item is already owned
+      if (prev.playerStats.inventory[itemId]) {
+        success = false;
+        return prev; // Already owned, return unchanged state
+      }
+      
+      // Player can afford it and doesn't already own it
+      success = true;
+      
+      // Return updated state with reduced coins and the item added to inventory
+      return {
+        ...prev,
+        playerStats: {
+          ...prev.playerStats,
+          coins: prev.playerStats.coins - price,
+          inventory: {
+            ...prev.playerStats.inventory,
+            [itemId]: true
+          }
+        }
+      };
+    });
+    
+    return success;
+  }, []);
+
+  // Function to check if an item is owned
+  const isItemOwned = useCallback((itemId: string): boolean => {
+    return !!state.playerStats?.inventory?.[itemId];
+  }, [state.playerStats.inventory]);
+
+  // Function to add coins to the player's balance
+  const addCoins = useCallback((amount: number) => {
+    setState((prev: GameState) => ({
+      ...prev,
+      playerStats: {
+        ...prev.playerStats,
+        coins: prev.playerStats.coins + amount
+      }
+    }));
+  }, []);
+
   // Provide the state and stable updater functions
   const value = {
     ...state,
@@ -171,6 +235,9 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
     updateWorldProgress,
     setActiveWorld,
     togglePremium,
+    buyItem,
+    isItemOwned,
+    addCoins,
   };
 
   return (

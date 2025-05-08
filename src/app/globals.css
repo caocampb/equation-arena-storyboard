@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "../styles/wood-panel.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -388,4 +389,29 @@
 
 .animate-glow-slow {
   animation: glow 3s ease-in-out infinite;
+}
+
+/* Custom scrollbar for Stardew Valley aesthetic */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #67492f #3d2813;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #3d2813;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #67492f;
+  border-radius: 10px;
+  border: 1px solid #3d2813;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #8b5e3c;
 }

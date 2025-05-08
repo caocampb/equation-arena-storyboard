@@ -99,10 +99,10 @@ export default function SimpleOverworldGraph() {
   const rightConnectorX = centerX + 80;  // Right of center (300 + 80 = 380)
 
   return (
-    <div className="relative w-full h-[580px] bg-[#0A1929]">
-      {/* Blue dot background pattern */}
+    <div className="relative w-full h-[580px] bg-[#5a3921]/40 rounded-lg border border-[#3d2813] shadow-inner overflow-hidden">
+      {/* Wooden dot background pattern */}
       <div className="absolute inset-0" style={{
-        backgroundImage: 'radial-gradient(#1A73E8 1px, transparent 1px)',
+        backgroundImage: 'radial-gradient(#67492f 1px, transparent 1px)',
         backgroundSize: '20px 20px',
         opacity: 0.3
       }}></div>
@@ -114,7 +114,7 @@ export default function SimpleOverworldGraph() {
         <line 
           x1={scienceX} y1={worldsY} 
           x2={languageX} y2={worldsY} 
-          stroke={scienceLanguageActive ? "#00C2CB" : "#9CA3AF"} 
+          stroke={scienceLanguageActive ? "#34A65F" : "#67492f"} 
           strokeWidth="2" 
         />
         
@@ -122,7 +122,7 @@ export default function SimpleOverworldGraph() {
         <line 
           x1={scienceX} y1={worldsY} 
           x2={leftConnectorX} y2={connectorY} 
-          stroke={scienceLeftActive ? "#00C2CB" : "#9CA3AF"} 
+          stroke={scienceLeftActive ? "#34A65F" : "#67492f"} 
           strokeWidth="2" 
         />
         
@@ -130,7 +130,7 @@ export default function SimpleOverworldGraph() {
         <line 
           x1={languageX} y1={worldsY} 
           x2={rightConnectorX} y2={connectorY} 
-          stroke={languageRightActive ? "#00C2CB" : "#9CA3AF"} 
+          stroke={languageRightActive ? "#34A65F" : "#67492f"} 
           strokeWidth="2" 
         />
         
@@ -138,7 +138,7 @@ export default function SimpleOverworldGraph() {
         <line 
           x1={hubX} y1={hubY} 
           x2={leftConnectorX} y2={connectorY} 
-          stroke={isGoldenPath('hub', 'left-connector') ? "#FFD700" : (hubLeftActive ? "#00C2CB" : "#9CA3AF")} 
+          stroke={isGoldenPath('hub', 'left-connector') ? "#FFD700" : (hubLeftActive ? "#34A65F" : "#67492f")} 
           strokeWidth={isGoldenPath('hub', 'left-connector') ? "4" : "2"}
           strokeDasharray={isGoldenPath('hub', 'left-connector') && !hubLeftActive ? "6 2" : "none"}
           className={isGoldenPath('hub', 'left-connector') ? "animate-pulse-subtle" : ""}
@@ -149,7 +149,7 @@ export default function SimpleOverworldGraph() {
         <line 
           x1={hubX} y1={hubY} 
           x2={rightConnectorX} y2={connectorY} 
-          stroke={isGoldenPath('hub', 'right-connector') ? "#FFD700" : (hubRightActive ? "#00C2CB" : "#9CA3AF")} 
+          stroke={isGoldenPath('hub', 'right-connector') ? "#FFD700" : (hubRightActive ? "#34A65F" : "#67492f")} 
           strokeWidth={isGoldenPath('hub', 'right-connector') ? "4" : "2"}
           strokeDasharray={isGoldenPath('hub', 'right-connector') && !hubRightActive ? "6 2" : "none"}
           className={isGoldenPath('hub', 'right-connector') ? "animate-pulse-subtle" : ""}
@@ -160,7 +160,7 @@ export default function SimpleOverworldGraph() {
         <line 
           x1={leftConnectorX} y1={connectorY} 
           x2={mathX} y2={mathY} 
-          stroke={isGoldenPath('left-connector', 'math-world') ? "#FFD700" : (leftMathActive ? "#00C2CB" : "#9CA3AF")} 
+          stroke={isGoldenPath('left-connector', 'math-world') ? "#FFD700" : (leftMathActive ? "#34A65F" : "#67492f")} 
           strokeWidth={isGoldenPath('left-connector', 'math-world') ? "6" : "2"}
           strokeDasharray={isGoldenPath('left-connector', 'math-world') && !leftMathActive ? "6 2" : "none"}
           className={isGoldenPath('left-connector', 'math-world') ? "animate-pulse-subtle" : ""}
@@ -171,7 +171,7 @@ export default function SimpleOverworldGraph() {
         <line 
           x1={rightConnectorX} y1={connectorY} 
           x2={mathX} y2={mathY} 
-          stroke={isGoldenPath('right-connector', 'math-world') ? "#FFD700" : (rightMathActive ? "#00C2CB" : "#9CA3AF")} 
+          stroke={isGoldenPath('right-connector', 'math-world') ? "#FFD700" : (rightMathActive ? "#34A65F" : "#67492f")} 
           strokeWidth={isGoldenPath('right-connector', 'math-world') ? "6" : "2"}
           strokeDasharray={isGoldenPath('right-connector', 'math-world') && !rightMathActive ? "6 2" : "none"}
           className={isGoldenPath('right-connector', 'math-world') ? "animate-pulse-subtle" : ""}
@@ -184,7 +184,7 @@ export default function SimpleOverworldGraph() {
           className={`cursor-pointer transition-transform duration-150 ${selectedNode === 'hub' ? 'scale-110' : 'scale-100'}`}
           onClick={() => handleNodeClick('hub')}
         >
-          <circle r="20" fill="#4169E1" stroke="#FFD700" strokeWidth="2" filter="url(#glow)"/>
+          <circle r="20" fill="#7a5033" stroke="#FFD700" strokeWidth="2" filter="url(#glow)"/>
           <foreignObject x="-15" y="-15" width="30" height="30">
             <div className="h-full flex items-center justify-center">
               <div className="text-white text-xl">🏠</div>
@@ -198,8 +198,8 @@ export default function SimpleOverworldGraph() {
           className={`cursor-pointer transition-transform duration-150 ${selectedNode === 'left-connector' ? 'scale-110' : 'scale-100'}`}
           onClick={() => handleNodeClick('left-connector')}
         >
-          <circle r="12" fill="#4B5563" />
-          <circle r="6" fill="white" />
+          <circle r="12" fill="#5a3921" />
+          <circle r="6" fill="#f8e4bc" />
         </g>
         
         <g 
@@ -207,8 +207,8 @@ export default function SimpleOverworldGraph() {
           className={`cursor-pointer transition-transform duration-150 ${selectedNode === 'right-connector' ? 'scale-110' : 'scale-100'}`}
           onClick={() => handleNodeClick('right-connector')}
         >
-          <circle r="12" fill="#4B5563" />
-          <circle r="6" fill="white" />
+          <circle r="12" fill="#5a3921" />
+          <circle r="6" fill="#f8e4bc" />
         </g>
         
         {/* World Nodes - Use handleNodeClick */}
@@ -220,21 +220,21 @@ export default function SimpleOverworldGraph() {
         >
           <path 
             d="M0,-45 L39,-22.5 L39,22.5 L0,45 L-39,22.5 L-39,-22.5 Z" 
-            fill={!scienceWorldActive ? "#696969" : "#1A73E8"}
-            stroke={!scienceWorldActive ? "#555555" : "#00C2CB"}
+            fill={!scienceWorldActive ? "#67492f" : "#7a5033"}
+            stroke={!scienceWorldActive ? "#5a3921" : "#FFD700"}
             strokeWidth="2"
           />
           <foreignObject x="-35" y="-30" width="70" height="60">
             <div className="h-full flex flex-col items-center justify-center text-center">
               {!scienceWorldActive ? (
                 <>
-                  <LockIcon className="text-white mb-1 w-5 h-5" />
-                  <div className="text-white text-xs font-display font-bold leading-tight">Science World</div>
-                  <div className="text-white text-[10px]">[LOCKED]</div>
+                  <LockIcon className="text-[#f8e4bc] mb-1 w-5 h-5" />
+                  <div className="text-[#f8e4bc] text-xs font-display font-bold leading-tight drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]">Science World</div>
+                  <div className="text-[#f8e4bc]/70 text-[10px] drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]">[LOCKED]</div>
                 </>
               ) : (
                 <>
-                  <div className="text-white text-xs font-display font-bold leading-tight">Science World</div>
+                  <div className="text-[#f8e4bc] text-xs font-display font-bold leading-tight drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]">Science World</div>
                   <div className="text-xl">🔬</div>
                 </>
               )}
@@ -250,21 +250,21 @@ export default function SimpleOverworldGraph() {
         >
           <path 
             d="M0,-45 L39,-22.5 L39,22.5 L0,45 L-39,22.5 L-39,-22.5 Z" 
-            fill={!languageWorldActive ? "#696969" : "#1A73E8"}
-            stroke={!languageWorldActive ? "#555555" : "#00C2CB"}
+            fill={!languageWorldActive ? "#67492f" : "#7a5033"}
+            stroke={!languageWorldActive ? "#5a3921" : "#FFD700"}
             strokeWidth="2"
           />
           <foreignObject x="-35" y="-30" width="70" height="60">
             <div className="h-full flex flex-col items-center justify-center text-center">
               {!languageWorldActive ? (
                 <>
-                  <LockIcon className="text-white mb-1 w-5 h-5" />
-                  <div className="text-white text-xs font-display font-bold leading-tight">Language World</div>
-                  <div className="text-white text-[10px]">[LOCKED]</div>
+                  <LockIcon className="text-[#f8e4bc] mb-1 w-5 h-5" />
+                  <div className="text-[#f8e4bc] text-xs font-display font-bold leading-tight drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]">Language World</div>
+                  <div className="text-[#f8e4bc]/70 text-[10px] drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]">[LOCKED]</div>
                 </>
               ) : (
                 <>
-                  <div className="text-white text-xs font-display font-bold leading-tight">Language World</div>
+                  <div className="text-[#f8e4bc] text-xs font-display font-bold leading-tight drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]">Language World</div>
                   <div className="text-xl">📚</div>
                 </>
               )}
@@ -280,19 +280,19 @@ export default function SimpleOverworldGraph() {
         >
           <path 
             d="M0,-45 L39,-22.5 L39,22.5 L0,45 L-39,22.5 L-39,-22.5 Z" 
-            fill="#1A73E8"
-            stroke="#00C2CB"
+            fill="#7a5033"
+            stroke="#FFD700"
             strokeWidth="6"
             className="shadow-glow"
-            filter="url(#glow-teal)"
+            filter="url(#glow-gold)"
           />
           <foreignObject x="-35" y="-35" width="70" height="70">
             <div className="h-full flex flex-col items-center justify-center text-center">
               {/* Spec Requirement (v0): Display icon-only reward preview here */}
               {/* <div className="absolute top-1 right-1 text-yellow-400">💰</div> */}
-              <div className="text-white text-sm font-display font-bold tracking-wide leading-tight">Math World</div>
+              <div className="text-[#f8e4bc] text-sm font-display font-bold tracking-wide leading-tight drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]">Math World</div>
               <div className="text-2xl mt-0.5">🧮</div>
-              <div className="w-16 h-2 bg-gray-200 rounded-full mt-1.5">
+              <div className="w-16 h-2 bg-[#3d2813]/70 rounded-full mt-1.5">
                 <div 
                   className="h-full bg-[#FFD700] rounded-full" 
                   style={{ width: `${worlds['math-world']?.completionPercentage}%` }} 
@@ -307,7 +307,7 @@ export default function SimpleOverworldGraph() {
               <div className="h-full w-full">
                 <Link 
                   href="/overworld/math-world" 
-                  className="block h-full w-full opacity-0 rounded-full focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#0A1930] focus:ring-[#00C2CB]"
+                  className="block h-full w-full opacity-0 rounded-full focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#7a5033] focus:ring-[#FFD700]"
                 >
                   <span className="sr-only">Navigate to Math World</span>
                 </Link>
@@ -337,9 +337,9 @@ export default function SimpleOverworldGraph() {
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
-          <filter id="glow-teal">
+          <filter id="glow-gold">
             <feGaussianBlur stdDeviation="2.5" result="blur" />
-            <feFlood floodColor="#00C2CB" floodOpacity="0.5" result="color" />
+            <feFlood floodColor="#FFD700" floodOpacity="0.5" result="color" />
             <feComposite in="color" in2="blur" operator="in" result="glow" />
             <feMerge>
               <feMergeNode in="glow" />
@@ -350,7 +350,7 @@ export default function SimpleOverworldGraph() {
       </svg>
       
       {/* Gameplay instructions - updated for clarity */}
-      <div className="absolute bottom-4 left-0 right-0 text-center text-white text-sm">
+      <div className="absolute bottom-4 left-0 right-0 text-center text-[#f8e4bc]/80 text-sm drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]">
         Start at the home node and click on connected nodes to explore
       </div>
     </div>
