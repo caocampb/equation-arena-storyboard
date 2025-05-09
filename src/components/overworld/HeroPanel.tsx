@@ -40,6 +40,7 @@ interface HeroPanelProps {
   battlePassTargetXp?: number;
   hasNewRewards?: boolean;
   defaultExpanded?: boolean;
+  characterHref?: string;
 }
 
 export function HeroPanel({
@@ -55,6 +56,7 @@ export function HeroPanel({
   battlePassTargetXp = 225,
   hasNewRewards = true,
   defaultExpanded = false,
+  characterHref = "/character",
 }: HeroPanelProps) {
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
   
@@ -86,14 +88,22 @@ export function HeroPanel({
             <div className="stardew-inner-container">
               <div className="flex items-center gap-4 relative z-10">
                 {/* Avatar */}
-                <div className="stardew-avatar-mini flex-shrink-0">
-                  <Avatar className="h-11 w-11">
-                    <AvatarImage src={avatarSrc} alt={username} />
-                    <AvatarFallback className="avatar-fallback text-sm">
-                      {username.substring(0, 2).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                </div>
+                <Link 
+                  href={characterHref} 
+                  aria-label="View character" 
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="stardew-avatar-mini flex-shrink-0 cursor-pointer relative group">
+                    {/* Glow border overlay that appears on hover */}
+                    <div className="absolute -inset-0.5 rounded-lg bg-yellow-400/0 group-hover:bg-yellow-400/80 opacity-0 group-hover:opacity-100 blur-sm transition-all z-0"></div>
+                    <Avatar className="h-11 w-11 relative z-10">
+                      <AvatarImage src={avatarSrc} alt={username} />
+                      <AvatarFallback className="avatar-fallback text-sm">
+                        {username.substring(0, 2).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                  </div>
+                </Link>
                 
                 {/* Basic Info */}
                 <div className="flex-1 min-w-0">
@@ -102,15 +112,29 @@ export function HeroPanel({
                     <div className="stardew-level-badge text-xs py-0.5">
                       Lvl {level}
                     </div>
-                    <div className="stardew-coin-indicator">
-                      <CoinsIcon className="h-3 w-3 mr-1 text-yellow-300" />
-                      <span className="text-xs">{coins}</span>
-                    </div>
+                    <Link href="/shop" aria-label="Visit shop" onClick={(e) => e.stopPropagation()}>
+                      <div className="stardew-coin-indicator group relative">
+                        <CoinsIcon className="h-3 w-3 mr-1 text-yellow-300" />
+                        <span className="text-xs">{coins}</span>
+                        <div className="fixed-tooltip text-[10px] -bottom-5">Shop</div>
+                      </div>
+                    </Link>
                   </div>
                 </div>
                 
                 {/* Expansion indicator */}
                 <div className="stardew-arrow text-amber-200 flex-shrink-0">▼</div>
+              </div>
+              
+              {/* Mini XP bar for collapsed view */}
+              <div className="mt-2 px-1">
+                <div className="stardew-mini-progress-container h-1.5 overflow-hidden">
+                  <div 
+                    className="stardew-mini-progress-bar h-full" 
+                    style={{ width: `${xpProgress}%` }}
+                    title={`XP: ${xpProgress}/100`}
+                  ></div>
+                </div>
               </div>
             </div>
           </div>
@@ -131,23 +155,26 @@ export function HeroPanel({
             <div className="stardew-inner-wrapper">
               {/* Header with collapse button - inner container */}
               <div className="stardew-inner-header"
-                onClick={toggleExpanded}
                 role="button"
                 aria-expanded="true"
                 aria-label="Collapse player information"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <div className="stardew-avatar flex-shrink-0">
-                      <Avatar className="h-12 w-12">
-                        <AvatarImage src={avatarSrc} alt={username} />
-                        <AvatarFallback className="avatar-fallback text-lg">
-                          {username.substring(0, 2).toUpperCase()}
-                        </AvatarFallback>
-                      </Avatar>
-                    </div>
+                    <Link href={characterHref} aria-label="View character">
+                      <div className="stardew-avatar flex-shrink-0 cursor-pointer relative group">
+                        {/* Glow border overlay that appears on hover */}
+                        <div className="absolute -inset-0.5 rounded-lg bg-yellow-400/0 group-hover:bg-yellow-400/80 opacity-0 group-hover:opacity-100 blur-sm transition-all z-0"></div>
+                        <Avatar className="h-12 w-12 relative z-10">
+                          <AvatarImage src={avatarSrc} alt={username} />
+                          <AvatarFallback className="avatar-fallback text-lg">
+                            {username.substring(0, 2).toUpperCase()}
+                          </AvatarFallback>
+                        </Avatar>
+                      </div>
+                    </Link>
                     
-                    <div className="ml-3">
+                    <div className="ml-3" onClick={toggleExpanded}>
                       <h3 className="stardew-username font-medium">{username}</h3>
                       <div className="stardew-level-badge inline-block">
                         Level {level}
@@ -156,7 +183,7 @@ export function HeroPanel({
                   </div>
                   
                   {/* Collapse indicator */}
-                  <div className="stardew-arrow text-amber-200">▲</div>
+                  <div className="stardew-arrow text-amber-200" onClick={toggleExpanded}>▲</div>
                 </div>
               </div>
               
@@ -167,8 +194,7 @@ export function HeroPanel({
                   <div className="flex justify-between items-center text-xs mb-1">
                     <span>Experience</span>
                     <div className="flex items-center">
-                      <span className="text-amber-200 mr-1">{xpProgress}/100</span>
-                      <span>({xpProgress}%)</span>
+                      <span className="text-amber-200">{xpProgress}/100</span>
                     </div>
                   </div>
                   <div className="stardew-progress-container w-full overflow-hidden">
@@ -460,6 +486,9 @@ export function HeroPanel({
           padding: 1px 4px;
           border-radius: 3px;
           transition: all 0.2s;
+          background: #5a3921;
+          border: 1px solid #3d2813;
+          box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
         }
         
         .stardew-coin-indicator:hover {
