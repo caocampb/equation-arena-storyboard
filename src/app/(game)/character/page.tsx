@@ -34,6 +34,7 @@ export default function CharacterPage() {
   const [showingBack, setShowingBack] = useState(false);
   const [showItemDetail, setShowItemDetail] = useState<string | null>(null);
   const [showPremiumModal, setShowPremiumModal] = useState(false);
+  const [purchaseSuccess, setPurchaseSuccess] = useState(false);
   const [equippedItems, setEquippedItems] = useState<{[key: string]: string}>({
     skin: "default_skin",
     effect: "none",
@@ -240,9 +241,12 @@ export default function CharacterPage() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-              onClick={() => setShowPremiumModal(false)}
+              onClick={() => {
+                if (!purchaseSuccess) {
+                  setShowPremiumModal(false);
+                }
+              }}
             >
-              {/* Modal content - keeping the original content */}
               <motion.div 
                 initial={{ scale: 0.9, y: 20, opacity: 0 }}
                 animate={{ scale: 1, y: 0, opacity: 1 }}
@@ -250,8 +254,367 @@ export default function CharacterPage() {
                 className="bg-gradient-to-b from-[#7a5033] to-[#5d3d27] rounded-xl p-6 max-w-md w-full relative overflow-hidden border-2 border-[#3d2813]"
                 onClick={e => e.stopPropagation()}
               >
-                {/* The rest of the modal content remains the same */}
-                {/* ... existing modal content ... */}
+                {/* Wood grain pattern overlay */}
+                <div className="absolute inset-0 bg-wood-pattern opacity-40 pointer-events-none"></div>
+                
+                {/* Corner nails */}
+                <div className="nail nail-top-left absolute top-3 left-3 w-3 h-3"></div>
+                <div className="nail nail-top-right absolute top-3 right-3 w-3 h-3"></div>
+                <div className="nail nail-bottom-left absolute bottom-3 left-3 w-3 h-3"></div>
+                <div className="nail nail-bottom-right absolute bottom-3 right-3 w-3 h-3"></div>
+                
+                {/* Golden border effects */}
+                <div className="absolute inset-0 border-[3px] border-[#FFD700]/40 rounded-xl opacity-70 pointer-events-none"></div>
+                
+                {/* Content container */}
+                <div className="relative z-10 flex flex-col items-center">
+                  {!purchaseSuccess ? (
+                    <>
+                      {/* Premium Crown Icon */}
+                      <motion.div
+                        initial={{ opacity: 0, y: 20, scale: 0.5 }}
+                        animate={{ 
+                          opacity: 1, 
+                          y: 0,
+                          scale: 1,
+                          transition: { delay: 0.3, duration: 0.6, type: "spring" }
+                        }}
+                        className="text-7xl mb-6 drop-shadow-[0_0_15px_rgba(255,215,0,0.6)]"
+                      >
+                        <motion.div
+                          animate={{ 
+                            y: [0, -8, 0],
+                            rotateZ: [-5, 5, -5]
+                          }}
+                          transition={{ 
+                            duration: 4, 
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                          }}
+                        >
+                          👑
+                        </motion.div>
+                      </motion.div>
+                      
+                      {/* Premium text */}
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ 
+                          opacity: 1, 
+                          scale: [0.8, 1.1, 1],
+                          transition: { delay: 0.5, duration: 0.6, times: [0, 0.6, 1] }
+                        }}
+                        className="w-full text-center"
+                      >
+                        <h2 className="text-3xl font-bold text-[#FFD700] mb-3 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                          PREMIUM UPGRADE
+                        </h2>
+                        
+                        <div className="w-4/5 h-1 mx-auto bg-[#FFD700]/50 rounded-full mb-6"></div>
+                        
+                        <motion.p 
+                          initial={{ opacity: 0 }}
+                          animate={{ 
+                            opacity: 1,
+                            transition: { delay: 0.8, duration: 0.3 } 
+                          }}
+                          className="text-[#f8e4bc] text-xl mb-5 drop-shadow-[0_1px_1px_rgba(0,0,0,0.6)]"
+                        >
+                          Unlock all premium character items!
+                        </motion.p>
+                      </motion.div>
+                      
+                      {/* Features List */}
+                      <ul className="text-[#f8e4bc]/90 text-base mb-8 space-y-3 w-full max-w-xs mx-auto">
+                        <li className="flex items-center gap-3">
+                          <span className="text-[#FFD700] text-lg">✓</span>
+                          <span>Exclusive character skins</span>
+                        </li>
+                        <li className="flex items-center gap-3">
+                          <span className="text-[#FFD700] text-lg">✓</span>
+                          <span>Premium effects and animations</span>
+                        </li>
+                        <li className="flex items-center gap-3">
+                          <span className="text-[#FFD700] text-lg">✓</span>
+                          <span>Legendary accessories</span>
+                        </li>
+                      </ul>
+                      
+                      {/* Purchase confirmation section */}
+                      <div className="w-full bg-[#3d2813]/80 rounded-lg p-4 mb-6 border border-[#FFD700]/40">
+                        <p className="text-[#f8e4bc] text-center text-lg font-medium">
+                          Price: <span className="font-bold text-[#FFD700] text-xl ml-1">$9.99</span>
+                        </p>
+                      </div>
+                      
+                      {/* Action buttons */}
+                      <div className="flex gap-4 w-full mt-2">
+                        <motion.button 
+                          className="flex-1 bg-[#34A65F] hover:bg-[#2C8F4F] text-white font-bold py-3 rounded-lg shadow-md text-lg"
+                          whileHover={{ scale: 1.03 }}
+                          whileTap={{ scale: 0.98 }}
+                          onClick={() => {
+                            // Show purchase success animation
+                            setPurchaseSuccess(true);
+                            
+                            // Auto close after animation
+                            setTimeout(() => {
+                              setPurchaseSuccess(false);
+                              setShowPremiumModal(false);
+                              // Here you would trigger actual purchase processing
+                            }, 5000);
+                          }}
+                        >
+                          CONFIRM PURCHASE
+                        </motion.button>
+                        <motion.button 
+                          className="px-6 bg-[#3d2813] hover:bg-[#503018] text-[#f8e4bc] font-bold py-3 rounded-lg shadow-md text-lg"
+                          whileHover={{ scale: 1.03 }}
+                          whileTap={{ scale: 0.98 }}
+                          onClick={() => setShowPremiumModal(false)}
+                        >
+                          CANCEL
+                        </motion.button>
+                      </div>
+                    </>
+                  ) : (
+                    /* Fortnite-Style Purchase Success Animation with Stardew Theme */
+                    <motion.div className="w-full py-4 flex flex-col items-center">
+                      {/* Success message with item reveal animation */}
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ 
+                          opacity: 1, 
+                          scale: [0.8, 1.2, 1],
+                          transition: { duration: 0.7, times: [0, 0.6, 1] }
+                        }}
+                        className="text-center mb-4"
+                      >
+                        <h2 className="text-3xl font-bold text-[#FFD700] mb-4 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                          PREMIUM UNLOCKED!
+                        </h2>
+                        
+                        {/* Rainbow shimmer effect line */}
+                        <div className="relative h-2 w-full mx-auto mb-4 overflow-hidden rounded-full">
+                          <div className="absolute inset-0 bg-gradient-to-r from-[#FF1493] via-[#FFD700] to-[#00BFFF]"></div>
+                          <motion.div 
+                            className="absolute inset-0 bg-gradient-to-r from-[#00BFFF] via-[#FFD700] to-[#FF1493]"
+                            animate={{ x: ["0%", "100%"] }}
+                            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                          />
+                        </div>
+                      </motion.div>
+                      
+                      {/* Celebratory confetti overlay */}
+                      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                        {Array.from({ length: 30 }).map((_, i) => (
+                          <motion.div
+                            key={i}
+                            className="absolute w-2 h-6"
+                            style={{
+                              background: `${['#FF1493', '#FFD700', '#00BFFF', '#7FFF00', '#9370DB'][Math.floor(Math.random() * 5)]}`,
+                              top: -20,
+                              left: `${Math.random() * 100}%`,
+                              transformOrigin: "center bottom",
+                            }}
+                            initial={{ y: -20, opacity: 0, rotateZ: 0 }}
+                            animate={{
+                              y: ["0%", `${400 + Math.random() * 200}px`],
+                              opacity: [0, 1, 0.7, 0],
+                              rotateZ: Math.random() * 360 * (Math.random() > 0.5 ? 1 : -1)
+                            }}
+                            transition={{
+                              duration: 2.5 + Math.random() * 2.5,
+                              ease: [0.33, 1, 0.68, 1],
+                              delay: Math.random() * 2,
+                              repeat: Infinity,
+                              repeatDelay: Math.random() * 2
+                            }}
+                          />
+                        ))}
+                      </div>
+                      
+                      {/* Item cards that flip in sequence */}
+                      <div className="grid grid-cols-3 gap-4 w-full mb-6">
+                        {[
+                          { icon: "🤖", name: "Math Bot", delay: 0.2, color: "#FF1493" },
+                          { icon: "🔢", name: "Number Rain", delay: 0.7, color: "#00BFFF" },
+                          { icon: "👑", name: "Crown", delay: 1.2, color: "#FFD700" }
+                        ].map((item, index) => (
+                          <motion.div
+                            key={index}
+                            initial={{ rotateY: 90, opacity: 0 }}
+                            animate={{ 
+                              rotateY: 0, 
+                              opacity: 1,
+                              transition: {
+                                delay: item.delay,
+                                duration: 0.5
+                              }
+                            }}
+                            className="relative bg-gradient-to-br from-[#3d2813]/90 to-[#2a1a0a]/90 p-4 rounded-lg border-2 flex flex-col items-center"
+                            style={{ borderColor: `${item.color}50` }}
+                          >
+                            <motion.div 
+                              className="absolute inset-0 opacity-20 rounded-lg z-0" 
+                              style={{ background: item.color }}
+                              animate={{ opacity: [0.1, 0.3, 0.1] }}
+                              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                            />
+                            
+                            <motion.div 
+                              className="text-5xl mb-2 z-10"
+                              animate={{ 
+                                scale: [1, 1.15, 1],
+                                rotate: [-5, 5, -5, 5, 0],
+                              }}
+                              transition={{ 
+                                scale: { duration: 2, repeat: Infinity, ease: "easeInOut" },
+                                rotate: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: index * 0.3 }
+                              }}
+                            >
+                              {item.icon}
+                            </motion.div>
+                            
+                            <div className="text-[#f8e4bc] text-sm text-center font-bold relative z-10">
+                              {item.name}
+                            </div>
+                            
+                            {/* Shine effect across item */}
+                            <motion.div 
+                              className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 z-20"
+                              animate={{ 
+                                opacity: [0, 0.3, 0],
+                                x: ["-100%", "100%"]
+                              }}
+                              transition={{ 
+                                duration: 1.5, 
+                                repeat: Infinity,
+                                repeatDelay: 3 + index,
+                                ease: "easeInOut"
+                              }}
+                            />
+                          </motion.div>
+                        ))}
+                      </div>
+                      
+                      {/* Stardew-styled magical effect */}
+                      <div className="relative flex items-center justify-center w-32 h-32 mb-6">
+                        {/* Colorful animated orbit rings */}
+                        {[...Array(3)].map((_, i) => (
+                          <motion.div
+                            key={i}
+                            className={`absolute rounded-full border-2 opacity-70`}
+                            style={{ 
+                              width: `${80 + i * 30}px`, 
+                              height: `${80 + i * 30}px`,
+                              borderColor: i === 0 ? "#FFD700" : i === 1 ? "#00BFFF" : "#FF1493"
+                            }}
+                            animate={{ rotate: i % 2 === 0 ? 360 : -360 }}
+                            transition={{ 
+                              duration: 8 + i * 4, 
+                              repeat: Infinity, 
+                              ease: "linear" 
+                            }}
+                          />
+                        ))}
+                        
+                        {/* Central glowing orb */}
+                        <motion.div
+                          className="absolute w-20 h-20 bg-gradient-to-br from-[#FFD700] to-[#FFA500] rounded-full z-10 opacity-80"
+                          animate={{ 
+                            scale: [1, 1.2, 1],
+                            boxShadow: [
+                              "0 0 10px 5px rgba(255, 215, 0, 0.5)",
+                              "0 0 20px 10px rgba(255, 215, 0, 0.7)",
+                              "0 0 10px 5px rgba(255, 215, 0, 0.5)"
+                            ]
+                          }}
+                          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                        />
+                        
+                        {/* Floating coins and sparkles */}
+                        <div className="absolute inset-0">
+                          {[...Array(12)].map((_, i) => (
+                            <motion.div
+                              key={i}
+                              className="absolute w-6 h-6 text-xl"
+                              initial={{ 
+                                x: 0, 
+                                y: 0,
+                                opacity: 0 
+                              }}
+                              animate={{ 
+                                x: (Math.random() - 0.5) * 120,
+                                y: (Math.random() - 0.5) * 120,
+                                opacity: [0, 1, 0],
+                                scale: [0.7, 1, 0.7],
+                                rotate: Math.random() * 360
+                              }}
+                              transition={{ 
+                                repeat: Infinity,
+                                duration: 2 + Math.random() * 2,
+                                delay: Math.random() * 2,
+                                ease: "easeInOut"
+                              }}
+                              style={{
+                                left: '50%',
+                                top: '50%',
+                              }}
+                            >
+                              {i % 3 === 0 ? "💰" : i % 3 === 1 ? "✨" : "⭐"}
+                            </motion.div>
+                          ))}
+                        </div>
+                        
+                        <span className="text-6xl relative z-20 drop-shadow-[0_0_10px_rgba(255,215,0,0.8)]">✨</span>
+                      </div>
+                      
+                      <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ 
+                          opacity: 1, 
+                          y: 0,
+                          transition: { delay: 1.5, duration: 0.5 }
+                        }}
+                        className="text-[#f8e4bc] text-2xl font-bold text-center mb-2"
+                      >
+                        All premium items are now yours!
+                      </motion.p>
+                      
+                      <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ 
+                          opacity: [0, 1, 0.8, 1],
+                          transition: { delay: 1.8, duration: 1.5, repeat: Infinity }
+                        }}
+                        className="text-[#FFD700] text-base font-medium text-center mb-6"
+                      >
+                        Find your new items in the inventory
+                      </motion.p>
+                      
+                      {/* Progress bar for auto-close indication */}
+                      <div className="w-full bg-[#3d2813]/40 h-2 rounded-full overflow-hidden mt-2 relative">
+                        {/* Rainbow gradient background */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-[#FF4500] via-[#FFD700] to-[#00BFFF] opacity-60"></div>
+                        
+                        <motion.div 
+                          className="h-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] relative"
+                          initial={{ width: 0 }}
+                          animate={{ width: "100%" }}
+                          transition={{ duration: 5, ease: "linear" }}
+                        >
+                          {/* Animated shine effect */}
+                          <motion.div 
+                            className="absolute inset-y-0 right-0 w-10 bg-gradient-to-r from-transparent to-white opacity-60"
+                            animate={{ x: ["0%", "100%"] }}
+                            transition={{ duration: 1.5, repeat: 3, repeatType: "loop" }}
+                          />
+                        </motion.div>
+                      </div>
+                    </motion.div>
+                  )}
+                </div>
               </motion.div>
             </motion.div>
           )}

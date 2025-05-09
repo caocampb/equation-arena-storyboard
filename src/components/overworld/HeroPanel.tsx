@@ -98,8 +98,8 @@ export function HeroPanel({
                     <div className="absolute -inset-0.5 rounded-lg bg-yellow-400/0 group-hover:bg-yellow-400/80 opacity-0 group-hover:opacity-100 blur-sm transition-all z-0"></div>
                     <Avatar className="h-11 w-11 relative z-10">
                       <AvatarImage src={avatarSrc} alt={username} />
-                      <AvatarFallback className="avatar-fallback text-sm">
-                        {username.substring(0, 2).toUpperCase()}
+                      <AvatarFallback className="avatar-fallback text-2xl flex items-center justify-center">
+                        🧙
                       </AvatarFallback>
                     </Avatar>
                   </div>
@@ -167,8 +167,8 @@ export function HeroPanel({
                         <div className="absolute -inset-0.5 rounded-lg bg-yellow-400/0 group-hover:bg-yellow-400/80 opacity-0 group-hover:opacity-100 blur-sm transition-all z-0"></div>
                         <Avatar className="h-12 w-12 relative z-10">
                           <AvatarImage src={avatarSrc} alt={username} />
-                          <AvatarFallback className="avatar-fallback text-lg">
-                            {username.substring(0, 2).toUpperCase()}
+                          <AvatarFallback className="avatar-fallback text-3xl flex items-center justify-center">
+                            🧙
                           </AvatarFallback>
                         </Avatar>
                       </div>
@@ -418,6 +418,9 @@ export function HeroPanel({
           color: #f2e9db;
           font-family: system-ui, -apple-system, sans-serif;
           font-weight: 600;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         
         /* Username styling - using system fonts for consistency */

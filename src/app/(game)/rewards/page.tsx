@@ -11,26 +11,42 @@ import { cn } from "@/lib/utils";
 export default function RewardsPage() {
   const { playerStats, hasPremium, togglePremium } = useGameState();
   const [activeTrack, setActiveTrack] = useState<"free" | "premium">("free");
-  const [showTutorial, setShowTutorial] = useState(false); // Change default to false to avoid hydration issues
+  const [showTutorial, setShowTutorial] = useState(false);
   const [tutorialStep, setTutorialStep] = useState(1);
   const [showUnlockAnimation, setShowUnlockAnimation] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [showParticles, setShowParticles] = useState(false);
+  const [showClaimPopup, setShowClaimPopup] = useState(false);
+
+  // Debug claim popup state changes
+  useEffect(() => {
+    console.log("Claim popup state changed:", showClaimPopup);
+  }, [showClaimPopup]);
 
   // Use useEffect to set client-side state
   useEffect(() => {
     setIsClient(true);
-    // Now we can safely show tutorial once we're on client
+    // We'll only show the tutorial initially, not after every popup close
     setShowTutorial(true);
-    // And safely show particles once we're client-side
     setShowParticles(true);
 
-    // Simulate loading state for Framer animations
     const timer = setTimeout(() => {
       // No longer using isLoaded
     }, 100);
     return () => clearTimeout(timer);
-  }, []);
+  }, []); // Empty dependency array means this only runs once on mount
+  
+  // Separate useEffect for handling the claim popup timer
+  useEffect(() => {
+    // Only set up timer if popup is showing
+    if (showClaimPopup) {
+      const claimPopupTimer = setTimeout(() => {
+        setShowClaimPopup(false);
+      }, 3500); // Auto-close after 3.5 seconds
+      
+      return () => clearTimeout(claimPopupTimer);
+    }
+  }, [showClaimPopup]); // This effect only manages the claim popup
   
   // Mock data for battle pass tiers
   const tiers = [
@@ -48,9 +64,11 @@ export default function RewardsPage() {
   
   // Current tier progress (hardcoded for mockup)
   const currentTier = 3;
-  const currentXp = 175;
-  const targetXp = 225;
-  const progressPercentage = Math.round((currentXp / targetXp) * 100);
+  const currentXp = 50; // Demo state, set to 50 to test disabled state
+  const targetXp = 100; // Demo state
+  const progressPercentage = (currentXp / targetXp) * 100;
+  // Comment out unused derived value
+  // const isEligible = currentXp >= targetXp; // Derived state for eligibility
   
   // Handle premium upgrade with animation
   const handlePremiumUpgrade = () => {
@@ -62,7 +80,7 @@ export default function RewardsPage() {
       setTimeout(() => {
         setShowUnlockAnimation(false);
         setActiveTrack("premium");
-      }, 1500);
+      }, 4500); // Increased from 1500ms to 4500ms (4.5 seconds)
     }, 500);
   };
 
@@ -83,54 +101,172 @@ export default function RewardsPage() {
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center"
+              exit={{ opacity: 0, transition: { duration: 0.3 } }}
+              className="fixed inset-0 bg-black/75 backdrop-blur-md z-50 flex items-center justify-center p-4"
             >
               <motion.div 
-                initial={{ scale: 0.8, opacity: 0 }}
+                initial={{ scale: 0.5, opacity: 0, y: 50 }}
                 animate={{ 
                   scale: 1, 
-                  opacity: 1,
-                  transition: { duration: 0.4 }
+                  opacity: 1, 
+                  y: 0,
+                  transition: { type: "spring", stiffness: 260, damping: 20, delay: 0.1 }
                 }}
-                className="flex flex-col items-center"
+                exit={{ scale: 0.5, opacity: 0, y: 50, transition: { duration: 0.3 } }}
+                className="bg-gradient-to-b from-[#7a5033] to-[#5d3d27] rounded-2xl p-6 sm:p-8 border-4 border-[#3d2813] shadow-2xl w-full max-w-md relative overflow-hidden text-center"
               >
+                {/* Wood grain pattern overlay */}
+                <div className="absolute inset-0 bg-wood-pattern opacity-40 pointer-events-none"></div>
+                
+                {/* Corner nails */}
+                <div className="nail nail-top-left absolute top-3 left-3 w-3 h-3"></div>
+                <div className="nail nail-top-right absolute top-3 right-3 w-3 h-3"></div>
+                <div className="nail nail-bottom-left absolute bottom-3 left-3 w-3 h-3"></div>
+                <div className="nail nail-bottom-right absolute bottom-3 right-3 w-3 h-3"></div>
+                
+                {/* Golden border effects */}
+                <div className="absolute inset-0 border-[3px] border-[#FFD700]/40 rounded-xl opacity-70 pointer-events-none"></div>
+                
+                {/* Subtle animated particles */}
+                <div className="absolute inset-0 opacity-30 pointer-events-none">
+                  {[...Array(15)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute bg-[#FFD700]/70 rounded-full"
+                      style={{
+                        width: Math.random() * 6 + 2,
+                        height: Math.random() * 6 + 2,
+                        left: `${Math.random() * 100}%`,
+                        top: `${Math.random() * 100}%`,
+                      }}
+                      animate={{
+                        scale: 1.2,
+                        opacity: [0, 0.8, 0],
+                        x: Math.random() * 30 - 15,
+                        y: Math.random() * 30 - 15,
+                      }}
+                      transition={{
+                        scale: { duration: 2, repeat: Infinity },
+                        opacity: { 
+                          duration: Math.random() * 3 + 2,
+                          times: [0, 0.5, 1],
+                          repeat: Infinity,
+                          ease: "linear"
+                        },
+                        x: { duration: Math.random() * 3 + 2, repeat: Infinity },
+                        y: { duration: Math.random() * 3 + 2, repeat: Infinity },
+                        delay: Math.random() * 2,
+                      }}
+                    />
+                  ))}
+                </div>
+
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ 
-                    opacity: 1, 
-                    y: 0,
-                    transition: { delay: 0.3, duration: 0.4 }
-                  }}
-                  className="text-6xl mb-6"
+                  className="relative z-10 flex flex-col items-center"
                 >
-                  ��
+                  {/* Premium Crown Icon */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20, scale: 0.5 }}
+                    animate={{ 
+                      opacity: 1, 
+                      y: 0,
+                      scale: 1,
+                      transition: { delay: 0.3, duration: 0.6, type: "spring" }
+                    }}
+                    className="text-7xl mb-6 drop-shadow-[0_0_15px_rgba(255,215,0,0.6)]"
+                  >
+                    <motion.div
+                      animate={{ 
+                        y: [0, -8, 0],
+                        rotateZ: [-5, 5, -5]
+                      }}
+                      transition={{ 
+                        duration: 4, 
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                    >
+                      👑
+                    </motion.div>
+                  </motion.div>
+                  
+                  {/* Premium text */}
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ 
+                      opacity: 1, 
+                      scale: [0.8, 1.1, 1],
+                      transition: { delay: 0.5, duration: 0.6, times: [0, 0.6, 1] }
+                    }}
+                  >
+                    <h2 className="text-4xl font-bold text-[#FFD700] mb-4 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                      PREMIUM UNLOCKED!
+                    </h2>
+                    
+                    <div className="w-4/5 h-1 mx-auto bg-[#FFD700]/50 rounded-full mb-6"></div>
+                    
+                    <motion.p 
+                      initial={{ opacity: 0 }}
+                      animate={{ 
+                        opacity: 1,
+                        transition: { delay: 0.8, duration: 0.3 } 
+                      }}
+                      className="text-[#f8e4bc] text-xl mb-4 drop-shadow-[0_1px_1px_rgba(0,0,0,0.6)]"
+                    >
+                      All premium rewards are now available!
+                    </motion.p>
+                  </motion.div>
+                  
+                  {/* Sparkling stars effect at bottom */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1, transition: { delay: 1, duration: 0.5 } }}
+                    className="mt-3 flex items-center justify-center gap-6"
+                  >
+                    <motion.div
+                      animate={{ 
+                        scale: [0.8, 1.2, 0.8],
+                        rotate: [-10, 10, -10],
+                        opacity: [0.7, 1, 0.7]
+                      }}
+                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                      className="text-[#FFD700] text-2xl"
+                    >
+                      ✨
+                    </motion.div>
+                    <motion.div
+                      animate={{ 
+                        scale: [1, 1.3, 1],
+                        rotate: [10, -10, 10],
+                        opacity: [0.7, 1, 0.7]
+                      }}
+                      transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                      className="text-[#FFD700] text-3xl"
+                    >
+                      ✨
+                    </motion.div>
+                    <motion.div
+                      animate={{ 
+                        scale: [0.9, 1.1, 0.9],
+                        rotate: [-5, 5, -5],
+                        opacity: [0.7, 1, 0.7]
+                      }}
+                      transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
+                      className="text-[#FFD700] text-2xl"
+                    >
+                      ✨
+                    </motion.div>
+                  </motion.div>
                 </motion.div>
                 
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ 
-                    opacity: 1, 
-                    scale: [0.8, 1.1, 1],
-                    transition: { delay: 0.5, duration: 0.6, times: [0, 0.6, 1] }
-                  }}
-                  className="text-4xl font-bold text-[#f8e4bc] mb-4 flex items-center drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]"
-                >
-                  <SparklesIcon className="h-8 w-8 mr-3 text-[#FFD700]" />
-                  PREMIUM UNLOCKED!
-                  <SparklesIcon className="h-8 w-8 ml-3 text-[#FFD700]" />
-                </motion.div>
-                
-                <motion.div 
-                  initial={{ opacity: 0 }}
-                  animate={{ 
-                    opacity: 1,
-                    transition: { delay: 0.8, duration: 0.3 } 
-                  }}
-                  className="text-[#f8e4bc]/80 text-xl drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]"
-                >
-                  All premium rewards are now available!
-                </motion.div>
+                {/* Progress bar for auto-close indication */}
+                <div className="absolute bottom-0 left-0 right-0 h-1.5">
+                  <motion.div 
+                    className="h-full bg-gradient-to-r from-[#FFD700] to-[#d4a256] rounded-bl-2xl rounded-br-2xl"
+                    initial={{ width: "0%" }}
+                    animate={{ width: "100%", transition: { duration: 4.4, ease: "linear" } }}
+                  />
+                </div>
               </motion.div>
             </motion.div>
           )}
@@ -226,6 +362,304 @@ export default function RewardsPage() {
                       Get Started
                     </button>
                   )}
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        
+        {/* NEW CLAIM POPUP ANIMATION */}
+        <AnimatePresence>
+          {showClaimPopup && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, transition: { duration: 0.3 } }}
+              className="fixed inset-0 bg-black/75 backdrop-blur-md z-[60] flex items-center justify-center p-4"
+              onClick={() => setShowClaimPopup(false)} // Optional: click overlay to close
+            >
+              <motion.div
+                initial={{ scale: 0.5, opacity: 0, y: 50 }}
+                animate={{ 
+                  scale: 1, 
+                  opacity: 1, 
+                  y: 0,
+                  transition: { type: "spring", stiffness: 260, damping: 20, delay: 0.1 }
+                }}
+                exit={{ scale: 0.5, opacity: 0, y: 50, transition: { duration: 0.3 } }}
+                className="bg-gradient-to-br from-violet-600 via-indigo-700 to-blue-700 rounded-2xl p-6 sm:p-8 border-2 border-violet-400/50 shadow-[0_0_30px_rgba(124,58,237,0.5)] w-full max-w-md relative overflow-hidden text-center"
+                onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside popup
+              >
+                {/* Animated cosmic background with stars */}
+                <div className="absolute inset-0 opacity-20">
+                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-indigo-500/20 via-purple-500/10 to-transparent"></div>
+                  {[...Array(50)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute rounded-full bg-white"
+                      style={{
+                        width: Math.random() * 3 + 1,
+                        height: Math.random() * 3 + 1,
+                        left: `${Math.random() * 100}%`,
+                        top: `${Math.random() * 100}%`,
+                      }}
+                      animate={{
+                        opacity: [0.1, 0.8, 0.1],
+                        scale: [1, Math.random() * 0.5 + 1, 1],
+                      }}
+                      transition={{
+                        duration: 2 + Math.random() * 5,
+                        repeat: Infinity,
+                        delay: Math.random() * 5,
+                      }}
+                    />
+                  ))}
+                </div>
+                
+                {/* Colorful particles bursting outward */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                  {[...Array(15)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute w-1.5 h-1.5 rounded-full"
+                      style={{
+                        backgroundColor: ['#FF5E9F', '#4CC4FF', '#FFDE59', '#7C3AED', '#36EFAD'][Math.floor(Math.random() * 5)],
+                        left: '50%',
+                        top: '40%',
+                        boxShadow: '0 0 8px currentColor',
+                      }}
+                      initial={{ scale: 0, x: 0, y: 0 }}
+                      animate={{ 
+                        scale: [0, 1, 0.8],
+                        x: (Math.random() - 0.5) * 250, 
+                        y: (Math.random() - 0.5) * 250,
+                        opacity: [0, 1, 0]
+                      }}
+                      transition={{ 
+                        duration: 2 + Math.random(),
+                        ease: "easeOut",
+                        delay: 0.6 + Math.random() * 0.5,
+                        repeat: Infinity,
+                        repeatDelay: 3
+                      }}
+                    />
+                  ))}
+                </div>
+
+                {/* Light rays emanating from center */}
+                <motion.div 
+                  className="absolute inset-0 bg-[radial-gradient(circle,_var(--tw-gradient-stops))] from-yellow-300/20 via-transparent to-transparent"
+                  animate={{ 
+                    opacity: [0, 0.7, 0.3, 0.7, 0],
+                    scale: [0.8, 1.2, 1]
+                  }}
+                  transition={{
+                    duration: 5,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+
+                {/* Claimed Item Icon (Star) with enhanced animation */}
+                <motion.div
+                  className="mx-auto mb-4 relative z-10"
+                  initial={{ scale: 0 }}
+                  animate={{ 
+                    scale: 1,
+                    transition: { type: "spring", stiffness: 180, damping: 10, delay: 0.2 }
+                  }}
+                >
+                  <motion.div 
+                    className="absolute -inset-4 rounded-full bg-gradient-to-r from-yellow-300 to-amber-500 opacity-40 blur-md"
+                    animate={{ 
+                      scale: [1, 1.3, 1],
+                      opacity: [0.2, 0.5, 0.2]
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                  
+                  <motion.div
+                    animate={{ 
+                      rotate: [0, 360],
+                    }}
+                    transition={{
+                      duration: 20,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                  >
+                    <motion.svg 
+                      width="100" 
+                      height="100" 
+                      viewBox="0 0 24 24" 
+                      fill="#FFE24D" 
+                      className="drop-shadow-[0_0_15px_rgba(255,215,0,0.8)]"
+                      animate={{
+                        scale: [1, 1.1, 1],
+                      }}
+                      transition={{
+                        scale: { 
+                          repeat: Infinity, 
+                          duration: 2,
+                          ease: "easeInOut"
+                        }
+                      }}
+                    >
+                      <path d="M12 1L15.5 8.5L23 9.5L17.5 15L19 23L12 19L5 23L6.5 15L1 9.5L8.5 8.5L12 1Z" />
+                    </motion.svg>
+                  </motion.div>
+                  
+                  {/* Orbiting mini stars */}
+                  {[...Array(5)].map((_, i) => {
+                    const angleOffset = (i * 72) + 180; // Distribute around the circle
+                    const delayOffset = i * 0.5;
+                    
+                    return (
+                      <motion.div 
+                        key={i}
+                        className="absolute w-3 h-3 text-yellow-300"
+                        initial={{ rotate: angleOffset }} 
+                        animate={{ 
+                          rotate: [angleOffset, angleOffset + 360],
+                        }}
+                        transition={{
+                          duration: 8,
+                          repeat: Infinity,
+                          ease: "linear",
+                          delay: delayOffset
+                        }}
+                        style={{
+                          top: '50%',
+                          left: '50%',
+                          transformOrigin: 'center',
+                        }}
+                      >
+                        <motion.div 
+                          className="absolute -ml-1.5 -mt-1.5"
+                          animate={{
+                            scale: [1, 1.5, 1],
+                            opacity: [0.4, 1, 0.4]
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            delay: i * 0.2
+                          }}
+                        >
+                          ⭐
+                        </motion.div>
+                      </motion.div>
+                    );
+                  })}
+                </motion.div>
+
+                {/* Text with enhanced reveal */}
+                <div className="relative z-10 overflow-hidden mt-2">
+                  <motion.h2 
+                    className="text-3xl font-bold text-white mb-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
+                    initial={{ y: 40, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.5, duration: 0.6, type: "spring" }}
+                  >
+                    REWARD UNLOCKED!
+                  </motion.h2>
+                  
+                  {/* Animated iridescent underline */}
+                  <motion.div 
+                    className="h-0.5 w-32 mx-auto bg-gradient-to-r from-pink-500 via-purple-400 to-cyan-500 rounded-full mb-4"
+                    initial={{ width: 0 }}
+                    animate={{ width: 128 }}
+                    transition={{ delay: 0.8, duration: 0.8 }}
+                  />
+                  
+                  <motion.p 
+                    className="text-xl text-purple-100 drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)] mb-4 font-medium"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.9, duration: 0.5 }}
+                  >
+                    Simple Particle Effect
+                  </motion.p>
+                </div>
+
+                {/* Central sparkle icon with animated sparkles */}
+                <motion.div
+                  className="relative z-10 mx-auto w-20 h-20 flex items-center justify-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.2, duration: 0.5 }}
+                >
+                  <motion.div
+                    className="text-yellow-300 absolute"
+                    animate={{ 
+                      rotate: 360,
+                      scale: [1, 1.2, 1]
+                    }}
+                    transition={{
+                      rotate: { duration: 10, repeat: Infinity, ease: "linear" },
+                      scale: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+                    }}
+                  >
+                    <SparklesIcon className="w-16 h-16 drop-shadow-[0_0_8px_rgba(253,224,71,0.8)]" />
+                  </motion.div>
+                  
+                  {/* Animated sparkle bursts */}
+                  {[...Array(4)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute w-8 h-8 text-white"
+                      style={{
+                        transformOrigin: 'center',
+                        rotate: i * 90,
+                      }}
+                    >
+                      <motion.div
+                        className="absolute top-2 left-2 w-4 h-4"
+                        animate={{
+                          x: [0, 20],
+                          opacity: [0, 1, 0],
+                          scale: [0.2, 1.5, 0.2],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          delay: i * 0.5,
+                          ease: "easeOut"
+                        }}
+                      >
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 0L12.9672 9.0328L21.9999 10L12.9672 10.9672L12 20L11.0328 10.9672L0 10L11.0328 9.0328L12 0Z" />
+                        </svg>
+                      </motion.div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+                
+                {/* Enhanced progress bar for auto-close indication */}
+                <div className="absolute bottom-0 left-0 right-0 h-2.5 bg-indigo-900/30">
+                  <motion.div 
+                    className="h-full bg-gradient-to-r from-yellow-400 via-amber-500 to-orange-500 rounded-br-2xl rounded-bl-2xl relative overflow-hidden"
+                    initial={{ width: "0%" }}
+                    animate={{ width: "100%" }}
+                    transition={{ duration: 3.4, delay: 0.1, ease: "linear" }}
+                  >
+                    {/* Animated shine effect */}
+                    <motion.div
+                      className="absolute top-0 bottom-0 w-20 bg-gradient-to-r from-transparent via-white to-transparent opacity-70 skew-x-30"
+                      animate={{ x: ["-100%", "400%"] }}
+                      transition={{ 
+                        repeat: 2, 
+                        duration: 1.7,
+                        ease: "easeInOut",
+                        delay: 0.2
+                      }}
+                    />
+                  </motion.div>
                 </div>
               </motion.div>
             </motion.div>
@@ -376,7 +810,7 @@ export default function RewardsPage() {
                   <p className="text-sm text-[#f8e4bc]/70 mb-1 drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]">FREE:</p>
                   <div className="bg-gradient-to-b from-[#7a5033] to-[#5d3d27] rounded-lg p-5 h-32 flex items-center justify-center border-2 border-[#3d2813] shadow-md relative overflow-hidden">
                     {/* Wood grain pattern */}
-                    <div className="absolute inset-0 bg-wood-pattern opacity-50"></div>
+                    <div className="absolute inset-0 bg-wood-pattern opacity-50 pointer-events-none"></div>
                     
                     <div className="text-center relative overflow-hidden flex flex-col items-center justify-center w-full z-10">
                       {/* Particle effects container */}
@@ -385,7 +819,7 @@ export default function RewardsPage() {
                         {showParticles && Array.from({ length: 8 }).map((_, i) => (
                           <motion.div
                             key={i}
-                            className="absolute w-2 h-2 rounded-full"
+                            className="absolute w-2 h-2 rounded-full pointer-events-none"
                             style={{
                               background: `rgba(255, ${Math.random() * 100 + 155}, ${Math.random() * 50}, 0.8)`,
                               boxShadow: '0 0 5px 2px rgba(255, 200, 0, 0.5)'
@@ -426,6 +860,23 @@ export default function RewardsPage() {
                       </motion.div>
                       
                       <p className="text-[#f8e4bc] font-medium mt-auto relative z-10 drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]">Simple Particle Effect</p>
+                      
+                      {/* Simple Test Button - More reliable than the motion.button */}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          console.log("Simple button clicked!");
+                          setShowClaimPopup(true);
+                        }}
+                        className={cn(
+                          "w-auto mx-auto mt-3 py-1.5 px-4 rounded-lg text-xs font-semibold transition-all",
+                          "border border-[#3d2813] shadow-sm cursor-pointer",
+                          "relative z-30 bg-gradient-to-b from-[#c17d3f] to-[#a66834] text-[#f8e4bc] hover:from-[#d48b47] hover:to-[#b7743a]",
+                        )}
+                        style={{ position: 'relative', zIndex: 9999 }}
+                      >
+                        CLAIM (TEST)
+                      </button>
                     </div>
                   </div>
                 </div>
