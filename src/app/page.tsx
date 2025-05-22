@@ -15,6 +15,13 @@ export default function HomePage() {
           <h2 className="text-2xl font-semibold mb-6">Game Components</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
             <ProjectCard 
+              title="STORYBOARD TEST" 
+              description="Interactive storyboard showing the complete Equation Arena gameplay flow with animated frames."
+              href="/storyboard-test"
+              badgeText="Storyboard"
+            />
+            
+            <ProjectCard 
               title="Overworld Navigation" 
               description="Map-based navigation between different game worlds and progression visualization."
               href="/overworld"
