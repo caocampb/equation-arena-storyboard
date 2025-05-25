@@ -22,6 +22,13 @@ export default function HomePage() {
             />
             
             <ProjectCard 
+              title="PLAYCADEMY PILOT" 
+              description="Summer camp-themed pilot storyboard for Alpha Anywhere homeschool network integration."
+              href="/pilot-storyboard"
+              badgeText="Coming Soon"
+            />
+            
+            <ProjectCard 
               title="Overworld Navigation" 
               description="Map-based navigation between different game worlds and progression visualization."
               href="/overworld"
