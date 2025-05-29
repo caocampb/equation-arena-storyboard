@@ -15,17 +15,17 @@ export default function HomePage() {
           <h2 className="text-2xl font-semibold mb-6">Game Components</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
             <ProjectCard 
-              title="STORYBOARD TEST" 
-              description="Interactive storyboard showing the complete Equation Arena gameplay flow with animated frames."
-              href="/storyboard-test"
+              title="Playcademy Camp" 
+              description="Summer camp-themed pilot storyboard for Alpha Anywhere."
+              href="/pilot-storyboard"
               badgeText="Storyboard"
             />
             
             <ProjectCard 
-              title="PLAYCADEMY PILOT" 
-              description="Summer camp-themed pilot storyboard for Alpha Anywhere homeschool network integration."
-              href="/pilot-storyboard"
-              badgeText="Coming Soon"
+              title="Equation Arena" 
+              description="Interactive storyboard showing the complete Equation Arena gameplay flow with animated frames."
+              href="/equation-arena"
+              badgeText="Storyboard"
             />
             
             <ProjectCard 

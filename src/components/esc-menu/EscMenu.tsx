@@ -62,21 +62,33 @@ export const EscMenu = () => {
       
       switch(key) {
         case 'p': 
+          e.preventDefault();
+          e.stopPropagation();
           handleNavigation('play');
           break;
         case 'r':
+          e.preventDefault();
+          e.stopPropagation();
           handleNavigation('rewards');
           break;
         case 'c':
+          e.preventDefault();
+          e.stopPropagation();
           handleNavigation('character');
           break;
         case 'l': // (Co)llections - using L since C is taken
+          e.preventDefault();
+          e.stopPropagation();
           handleNavigation('collections');
           break;
         case 's': // Shop - new shortcut
+          e.preventDefault();
+          e.stopPropagation();
           handleNavigation('shop');
           break;
         case 'escape': // ESC also works as Resume
+          e.preventDefault();
+          e.stopPropagation();
           handleNavigation('resume');
           break;
       }
