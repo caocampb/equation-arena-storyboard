@@ -256,25 +256,41 @@ export default function PilotStoryboardPage() {
             
             {/* Enhanced Visual Flow */}
             <div className="bg-gradient-to-r from-slate-50 to-slate-100 rounded-2xl p-6 lg:p-8 border border-slate-200 overflow-hidden">
-              <div className="flex flex-col items-center gap-6 max-w-5xl mx-auto">
-                {/* Top Row: Core Learning Loop */}
+              <div className="flex flex-col items-center gap-4 max-w-6xl mx-auto">
+                {/* The Discovery Loop */}
                 <div className="flex flex-col lg:flex-row items-center gap-3 lg:gap-4">
                   {[
                     { 
+                      icon: "🎮", 
+                      label: "Play Games", 
+                      desc: "Always free",
+                      color: "from-blue-100 to-indigo-200",
+                      textColor: "text-blue-700",
+                      borderColor: "border-blue-200"
+                    },
+                    { 
+                      icon: "💭", 
+                      label: "Want Power", 
+                      desc: "See cool items",
+                      color: "from-purple-100 to-pink-200",
+                      textColor: "text-purple-700",
+                      borderColor: "border-purple-200"
+                    },
+                    { 
                       icon: "🎯", 
                       label: "Math Games", 
-                      desc: "Learn & practice",
+                      desc: "Earn credits",
                       color: "from-emerald-100 to-green-200",
                       textColor: "text-emerald-700",
                       borderColor: "border-emerald-200"
                     },
                     { 
-                      icon: "🪙", 
-                      label: "Earn Credits", 
-                      desc: "Build currency",
-                      color: "from-emerald-100 to-green-200",
-                      textColor: "text-emerald-700",
-                      borderColor: "border-emerald-200"
+                      icon: "✨", 
+                      label: "Buy Power", 
+                      desc: "Game & overworld",
+                      color: "from-orange-100 to-red-200",
+                      textColor: "text-orange-700",
+                      borderColor: "border-orange-200"
                     }
                   ].map((step, i) => (
                     <React.Fragment key={i}>
@@ -283,14 +299,19 @@ export default function PilotStoryboardPage() {
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: i * 0.2 }}
                         whileHover={{ scale: 1.05, y: -2 }}
-                        className={`flex flex-col items-center justify-center text-center p-4 bg-gradient-to-br ${step.color} rounded-2xl border-2 ${step.borderColor} shadow-md hover:shadow-lg transition-all w-32 h-32 flex-shrink-0`}
+                        className={`flex flex-col items-center justify-center text-center p-4 bg-gradient-to-br ${step.color} rounded-2xl border-2 ${step.borderColor} shadow-md hover:shadow-lg transition-all w-32 h-32 flex-shrink-0 relative`}
                       >
                         <div className="text-2xl mb-2">{step.icon}</div>
                         <div className={`font-bold text-sm ${step.textColor} mb-1 leading-none`}>{step.label}</div>
                         <div className="text-xs text-slate-600 font-medium leading-none">{step.desc}</div>
+                        {i === 0 && (
+                          <div className="absolute -top-2 -left-2 bg-green-500 text-white text-xs px-2 py-0.5 rounded-full font-bold">
+                            START
+                          </div>
+                        )}
                       </motion.div>
                       
-                      {i < 1 && (
+                      {i < 3 && (
                         <motion.div
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
@@ -300,7 +321,7 @@ export default function PilotStoryboardPage() {
                           <motion.div
                             animate={{ x: [0, 4, 0] }}
                             transition={{ duration: 2, repeat: Infinity, delay: i * 0.5 }}
-                            className="text-lg text-emerald-500 font-bold"
+                            className={`text-lg font-bold ${i === 1 ? "text-purple-500" : "text-emerald-500"}`}
                           >
                             →
                           </motion.div>
@@ -310,64 +331,29 @@ export default function PilotStoryboardPage() {
                   ))}
                 </div>
                 
-                {/* Choice Indicator */}
-                <div className="flex items-center gap-2">
-                  <div className="h-12 w-0.5 bg-slate-300"></div>
-                  <div className="text-sm font-medium text-slate-600 px-3 py-1 bg-white rounded-full border border-slate-200">
-                    Credits enable:
-                  </div>
-                  <div className="h-12 w-0.5 bg-slate-300"></div>
-                </div>
-                
-                {/* Bottom Row: Parallel Options */}
-                <div className="flex flex-col lg:flex-row items-center gap-8">
-                  {/* Always Available Path */}
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="text-xs font-medium text-slate-500 bg-slate-100 px-3 py-1 rounded-full">Always Free</div>
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.4 }}
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      className="flex flex-col items-center justify-center text-center p-4 bg-gradient-to-br from-blue-100 to-indigo-200 rounded-2xl border-2 border-blue-200 shadow-md hover:shadow-lg transition-all w-32 h-32"
-                    >
-                      <div className="text-2xl mb-2">🎮</div>
-                      <div className="font-bold text-sm text-blue-700 mb-1 leading-none">Play Games</div>
-                      <div className="text-xs text-slate-600 font-medium leading-none">Entertainment</div>
-                    </motion.div>
-                  </div>
-                  
-                  {/* OR divider */}
-                  <div className="flex items-center">
-                    <div className="text-sm font-medium text-slate-400 px-2 py-1 bg-slate-50 rounded-lg border border-slate-200">
-                      OR
-                    </div>
-                  </div>
-                  
-                  {/* Credit-Required Path */}
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="text-xs font-medium text-orange-600 bg-orange-100 px-3 py-1 rounded-full flex items-center gap-1">
-                      <span>🪙</span> Costs Credits
-                    </div>
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.6 }}
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      className="flex flex-col items-center justify-center text-center p-4 bg-gradient-to-br from-orange-100 to-red-200 rounded-2xl border-2 border-orange-200 shadow-md hover:shadow-lg transition-all w-32 h-32"
-                    >
-                      <div className="text-2xl mb-2">✨</div>
-                      <div className="font-bold text-sm text-orange-700 mb-1 leading-none">Buy Powerups</div>
-                      <div className="text-xs text-slate-600 font-medium leading-none">Skins & boosts</div>
-                    </motion.div>
-                  </div>
-                </div>
-                
                 {/* Loop Back Indicator */}
                 <div className="mt-4 text-center">
-                  <div className="inline-flex items-center gap-2 text-sm text-slate-500">
-                    <span>↺</span>
-                    <span>Both paths lead back to more adventures!</span>
+                  <div className="inline-flex flex-col items-center gap-2">
+                    <div className="inline-flex items-center gap-2 text-sm text-slate-500">
+                      <span>↺</span>
+                      <span>Loop back to games with new powers!</span>
+                    </div>
+                    <div className="text-xs text-slate-400 max-w-md">
+                      The more you play, the more you want powerups. The more powerups you want, the more math you do!
+                    </div>
+                  </div>
+                </div>
+                
+                {/* What You Can Buy */}
+                <div className="mt-4 flex items-center justify-center gap-4">
+                  <div className="flex items-center gap-2 bg-white px-3 py-2 rounded-lg border border-slate-200 shadow-sm">
+                    <span className="text-sm">🎮</span>
+                    <span className="text-xs text-slate-600">Game Powerups</span>
+                  </div>
+                  <div className="text-xs text-slate-400">+</div>
+                  <div className="flex items-center gap-2 bg-white px-3 py-2 rounded-lg border border-slate-200 shadow-sm">
+                    <span className="text-sm">🏕️</span>
+                    <span className="text-xs text-slate-600">Overworld Skins</span>
                   </div>
                 </div>
               </div>
@@ -705,7 +691,7 @@ export default function PilotStoryboardPage() {
                   
                   <CardFooter className="bg-emerald-50 p-4 mt-auto">
                     <div className="text-sm text-slate-600 text-center w-full">
-                      <span className="font-medium">Learning Loop:</span> Problems → Credits → Choice (Play or Enhance)
+                      <span className="font-medium">Discovery Loop:</span> Play → Want powerups → Do math → Get stronger
                     </div>
                   </CardFooter>
                 </motion.div>
