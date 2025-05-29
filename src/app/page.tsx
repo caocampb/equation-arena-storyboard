@@ -24,7 +24,7 @@ export default function HomePage() {
             <ProjectCard 
               title="Equation Arena" 
               description="Interactive storyboard showing the complete Equation Arena gameplay flow with animated frames."
-              href="/storyboard-test"
+              href="/equation-arena"
               badgeText="Storyboard"
             />
             
