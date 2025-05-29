@@ -212,9 +212,9 @@ export default function MathWorldGraph() {
                     <foreignObject x="-45" y="-45" width="90" height="90">
                       <div className="h-full w-full">
                         <Link 
-                          href="/equation-arena" 
+                          href="/overworld/math-world/equation-arena" 
                           className="block h-full w-full opacity-0 rounded-full focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#0A1930] focus:ring-[#00C2CB]"
-                          aria-label="Navigate to Equation Arena Storyboard"
+                          aria-label="Navigate to Equation Arena"
                         />
       </div>
                     </foreignObject>
